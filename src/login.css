@@ -110,6 +110,8 @@
 
 /* Form Group */
 .form-group {
+  width: 119%; /* Full width for consistent alignment */
+  max-width: 339px; /* Same as button */
   margin-bottom: 1.5rem;
 }
 
@@ -138,8 +140,9 @@
 
 /* Login button */
 .login-form button {
-  width: 30%; /* Adjusted width */
-  margin: 2rem 0; /* Space around the button */
+  width: 100%; /* Full width for consistent alignment */
+  max-width: 300px; /* Maximum width for better design */
+  margin: 2rem 0; 
   padding: 0.75rem;
   border: none;
   background: linear-gradient(90deg, #007bff, #4b86f6);
@@ -148,8 +151,9 @@
   border-radius: 5px;
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.3s, background 0.3s ease;
-  align-self: flex-start; /* Aligns the button to the left */
+  align-self: center; /* Center align the button */
 }
+
 
 /* Form Styling */
 .login-form {
@@ -168,9 +172,12 @@
 
 /* Links */
 .login-options {
+  width: 100%; /* Full width for consistent alignment */
+  max-width: 300px; /* Same as input fields and button */
   margin-top: 1.5rem;
   text-align: center;
-  font-size: 1rem; /* Slightly increased font size */
+  font-size: 1rem;
+  align-self: center; /* Aligns the container centrally */
 }
 
 .login-options .register-link {

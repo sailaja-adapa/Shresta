@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import firebase from './firebase'; // Import firebase initialization
 import './Pass1.css'; // Assuming you have CSS for styling
 import { useNavigate } from 'react-router-dom';
+import './Forpas.css';
+import image from './forpas.jpg';
 import background from './forgot.jpg';
 
 const Forpas = () => {
@@ -44,8 +46,10 @@ const Forpas = () => {
   return (
     <div className="forgot-password-container">
       <div className="forgot-password-form-wrapper">
+        <img src={image} alt="Forgot Password" />
         <form className="forgot-password-form">
           <h2>Forgot Password</h2>
+          <p>Please enter your details to reset your password.</p>
           <input
             type="text"
             placeholder="Username"
@@ -55,6 +59,7 @@ const Forpas = () => {
             className="forgot-password-input"
             required
           />
+          <br/><br/>
           <input
             type="text"
             placeholder="Phone Number"
@@ -64,6 +69,7 @@ const Forpas = () => {
             className="forgot-password-input"
             required
           />
+          <br/><br/>
           <button
             type="button"
             onClick={handleSendOtp}
