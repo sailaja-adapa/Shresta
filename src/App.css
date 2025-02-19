@@ -6,6 +6,7 @@
   min-height: 100vh; /* Use min-height to ensure the container expands with content */
   background-size: cover;
   background-position: center;
+  padding-top: 70px;
 }
 
 /* Position the buttons in the top-right corner */

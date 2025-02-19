@@ -23,6 +23,7 @@
   border-radius: 12px; /* Slightly rounded corners */
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow for depth */
   transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+  margin-top: 400px;
 }
 
 .aboutus-container:hover {

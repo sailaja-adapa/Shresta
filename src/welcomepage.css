@@ -16,6 +16,7 @@
   width: 100%;
   max-width: 500px; /* Increased width */
   box-sizing: border-box;
+  margin-top: 5rem;
 }
 
 h1 {

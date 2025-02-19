@@ -1,6 +1,6 @@
 import React from "react";
 import { FaHome, FaInfoCircle, FaPhone } from "react-icons/fa"; // Import icons
-import './contact.css';  // Adjust the path if needed
+import './Aboutus.css';  
 
 const AboutUs = () => {
   return (
@@ -11,31 +11,7 @@ const AboutUs = () => {
           "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqAnxipM-jtSCHybZ385llk_mrsrAtKazexw&s')",
       }}
     >
-      {/* Navbar */}
-      <nav className="navbar">
-        <div className="container">
-          {/* Logo */}
-          <a href="#" className="logo text-dark">
-            Shresta
-          </a>
-
-          {/* Navigation Links */}
-          <ul className="nav-links flex items-center space-x-6">
-            <li className="flex items-center space-x-2">
-              <FaHome className="text-dark" />
-              <a href="/" className="text-dark">Home</a>
-            </li>
-            <li className="flex items-center space-x-2">
-              <FaInfoCircle className="text-dark" />
-              <a href="/aboutus" className="text-dark">About Us</a>
-            </li>
-            <li className="flex items-center space-x-2">
-              <FaPhone className="text-dark" />
-              <a href="/contact" className="text-dark">Contact Us</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
+      
 
       {/* About Us Section */}
       <section className="container mx-auto px-8 py-16 max-w-7xl ml-0">

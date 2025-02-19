@@ -1,6 +1,6 @@
 .thankyou-container {
   background-image: url('./thank.jpg'); /* Ensure the correct path to your image */
-  background-size: cover;
+  background-size:cover;
   background-position: center;
   background-repeat: no-repeat;
   height: 100vh; /* Ensures it covers the full viewport height */
@@ -14,6 +14,7 @@
   box-sizing: border-box;
   overflow: hidden; /* Ensures no scrollbars appear */
   padding-left: 50px; /* Adds space between the container and the left edge */
+  /* margin-top: 4rem; */
 }
 
 .thankyou-message {
