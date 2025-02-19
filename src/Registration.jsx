@@ -5,6 +5,9 @@ import { addDoc, collection, where, query, getDocs } from 'firebase/firestore';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import { MdEmail } from "react-icons/md";
+import { RiLockPasswordFill } from "react-icons/ri";
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const Registration = () => {
   const navigate = useNavigate();
@@ -20,6 +23,7 @@ const Registration = () => {
   const [country, setCountry] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const dbref = collection(db2, "Auth");
 
@@ -100,105 +104,164 @@ const Registration = () => {
         <div className="form-side">
           <div className="form-wrapper">
             <form className="registration-form" onSubmit={handleSubmit}>
-              <h2>Register</h2>
-              <input
-                type="text"
-                placeholder="Full Name"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                required
-              />
-              <input
-                type="text"
-                placeholder="First Name"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                required
-              />
-              <input
+              <h2 className='registration-heading'>Register</h2>
+              <div className='form-group'>
+                <label>Full Name</label>
+                <input
+                  type="text"
+                  placeholder="Full Name"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div className='form-group'>
+                <label>First Name</label>
+                <input
+                  type="text"
+                  placeholder="First Name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div className='form-group'>
+                <label>Last Name</label>
+                <input
                 type="text"
                 placeholder="Last Name"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
                 required
-              />
-              <input
+                />
+              </div>
+              
+              <div className='form-group'>
+                <label>Username</label>
+                <input
                 type="text"
                 placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
-              />
-              <select
+                />
+              </div>
+
+              <div className='form-group'>
+                <label>Gender</label>
+                <select
                 value={gender}
                 onChange={(e) => setGender(e.target.value)}
                 required
-              >
-                <option value="">Select Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-              </select>
-              <select
+                >
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
+
+              <div className='form-group'>
+                <label>State</label>
+                <select
                 value={state}
                 onChange={(e) => setState(e.target.value)}
                 required
-              >
-                <option value="">Select State</option>
-                {statesList.map((stateOption, index) => (
-                  <option key={index} value={stateOption}>
-                    {stateOption}
-                  </option>
-                ))}
-              </select>
-              <input
+                >
+                  <option value="">Select State</option>
+                  {statesList.map((stateOption, index) => (
+                    <option key={index} value={stateOption}>
+                      {stateOption}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className='form-group'>
+                <label>Phone Number</label>
+                <input
                 type="text"
                 placeholder="Phone Number"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
                 required
-              />
-              <input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-              <input
-                type="text"
-                placeholder="Adhar Number"
-                value={adhar}
-                onChange={(e) => setAdhar(e.target.value)}
-                required
-              />
-              <input
-                type="text"
-                placeholder="Country"
-                value={country}
-                onChange={(e) => setCountry(e.target.value)}
-                required
-              />
-              <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-              <input
-                type="password"
-                placeholder="Confirm Password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-              />
+                />
+              </div>
+
+              <div className='form-group'>
+                <label>Email <span><MdEmail className='icon'/></span> </label>
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+
+              <div className='form-group'>
+                <label>Adhar Number</label>
+                <input
+                  type="text"
+                  placeholder="Adhar Number"
+                  value={adhar}
+                  onChange={(e) => setAdhar(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div className='form-group'>
+                <label>Country</label>
+                <input
+                  type="text"
+                  placeholder="Country"
+                  value={country}
+                  onChange={(e) => setCountry(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div className='form-group'>
+                <label>Password <span><RiLockPasswordFill className='icon'/></span></label>
+                <div className="password-input-container">
+                  <input
+                    type={showPassword ? 'text' : 'password'} // Toggle input type
+                    placeholder="Enter your password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  {/* Eye icon for showing/hiding password */}
+                  <div
+                    className="eye-icon"
+                    onClick={() => setShowPassword(!showPassword)} // Toggle showPassword state
+                  >
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  </div>
+                </div>
+              </div>
+
+              <div className='form-group'>
+                <label>Confirm Password</label>
+                <input
+                  type="password"
+                  placeholder="Confirm Password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                />
+              </div>
+
               <button type="submit">Register</button>
+
               <p>
                 Already have an account?{' '}
                 <span className="login-link" onClick={handleLogin}>
                   Login
                 </span>
               </p>
+
             </form>
           </div>
         </div>

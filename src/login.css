@@ -123,7 +123,7 @@
 }
 
 .form-group input {
-  color: white; /* Ensure text is black */
+  color: black !important; 
   background-color: #c9d3d4; /* White background */
   width: 100%;
   padding: 0.8rem;
@@ -134,7 +134,7 @@
 }
 
 .form-group input::placeholder {
-  color: white; 
+  color: black; 
   opacity: 1;
 }
 

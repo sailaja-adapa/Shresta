@@ -63,6 +63,11 @@ body {
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
 }
 
+.registration-form {
+  width: 100%;
+  padding: 1rem; /* Added padding here */
+}
+
 .registration-form h2 {
   font-family: 'Open Sans', sans-serif;
   font-size: 2rem;
@@ -72,18 +77,24 @@ body {
   margin-bottom: 1.5rem;
 }
 
+.registration-form .form-group {
+  width: 100%; /* Ensure full width */
+  margin-bottom: 1rem; /* Keep some space between groups */
+}
+
 .registration-form input,
 .registration-form select {
-  width: 100%;
+  width: 100%; /* Ensures input fields match the form's width */
   padding: 0.75rem;
   margin-bottom: 1rem;
   border: 1px solid #ccc;
   border-radius: 8px;
   font-size: 1rem;
+  box-sizing: border-box; /* Ensures padding is included in width */
 }
 
 .registration-form button {
-  width: 100%;
+  width: 100%; /* Make button span the full width */
   padding: 0.75rem;
   background-color: #007bff;
   border: none;
@@ -115,6 +126,39 @@ body {
   color: #555;
 }
 
+/* Responsive Styles */
+@media (max-width: 1024px) {
+  .container-with-image {
+    flex-direction: column; /* Stack image and form vertically on tablet and below */
+  }
+
+  .image-side {
+    height: 250px; /* Adjust image height on medium-sized screens */
+    background-position: center; /* Center the background image */
+  }
+
+  .form-side {
+    padding: 1.5rem;
+  }
+  
+  .registration-form h2 {
+    font-size: 1.8rem; /* Adjust font size for smaller screens */
+  }
+
+  .registration-form .form-group{
+    margin: 0 auto;
+  }
+  
+  .registration-form input,
+  .registration-form select {
+    font-size: 0.9rem; /* Adjust input field font size */
+  }
+
+  .registration-form button {
+    font-size: 1rem; /* Adjust button font size */
+  }
+}
+
 @media (max-width: 768px) {
   .container-with-image {
     flex-direction: column;
@@ -128,4 +172,59 @@ body {
   .form-side {
     padding: 1rem;
   }
+
+  .registration-form h2 {
+    font-size: 1.5rem; /* Smaller heading size for mobile */
+    margin-bottom: 1rem;
+  }
+
+  .registration-form input,
+  .registration-form select {
+    font-size: 0.9rem; /* Adjust font size for smaller inputs */
+    padding: 0.65rem; /* Smaller padding for mobile screens */
+  }
+
+  .registration-form button {
+    font-size: 1rem; /* Adjust button font size */
+  }
+}
+
+@media (max-width: 480px) {
+  .registration-container {
+    padding: 1rem; /* Less padding for very small screens */
+  }
+
+  .form-wrapper {
+    padding: 1.5rem;
+  }
+
+  .registration-form {
+    padding: 1rem; /* Reduce padding for mobile */
+  }
+
+  .registration-form h2 {
+    font-size: 1.3rem; /* Even smaller heading for mobile */
+    margin-bottom: 0.8rem;
+  }
+
+  .registration-form input,
+  .registration-form select {
+    font-size: 0.85rem; /* Smaller font for inputs */
+    padding: 0.5rem; /* Reduced padding for mobile screens */
+  }
+
+  .registration-form button {
+    font-size: 1rem;
+    padding: 0.6rem; /* Adjust padding for smaller screens */
+  }
+}
+
+/* Prevent input elements from breaking in smaller containers */
+.form-group input {
+  width: 100% !important;
+}
+
+.eye-icon {
+  position: absolute;
+  bottom: 0px;
 }
