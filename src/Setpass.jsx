@@ -4,6 +4,7 @@ import { toast, ToastContainer } from 'react-toastify'; // Import toast and Toas
 import 'react-toastify/dist/ReactToastify.css'; // Import the CSS for toast notifications
 import './setpass.css'; // Assuming you have a CSS file for styling
 import background from './reset.jpg';
+import { RiLockPasswordFill } from "react-icons/ri";
 
 const SetPass = () => {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ const SetPass = () => {
   return (
     <div className="setpass-container" style={{ backgroundImage: `url(${background})` }}>
       <div className="centered-box">
-        <h2>Set New Password</h2>
+        <h2>Set New Password<span><RiLockPasswordFill className='icon'/></span></h2>
         <div className="setpass-form">
           <input 
             type="password" 
