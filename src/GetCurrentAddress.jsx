@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 
-const GetCurrentAddress = ({ onAddressFetched }) => {
+const GetCurrentAddress = ({ fetchAddressNow, onAddressFetched }) => {
     useEffect(() => {
+        if (!fetchAddressNow) return; // Only fetch address when `fetchAddressNow` is true
+
         const fetchAddress = async (latitude, longitude) => {
             const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&addressdetails=1&accept-language=en`;
             try {
@@ -14,7 +16,7 @@ const GetCurrentAddress = ({ onAddressFetched }) => {
                     throw new Error('No address data returned');
                 }
                 const address = data.address;
-                const formattedAddress = `${address.road || ''}, ${address.village || ''}, ${address.postcode || ''}, ${address.state_district || ''}, ${address.county || ''}, ${address.state || ''}, ${address.country || ''}`;
+                const formattedAddress = `${address.amenity || ''}, ${address.road || ''}, ${address.village || ''}, ${address.state_district || ''}, ${address.state || ''}, ${address.postcode || ''}, ${address.country || ''}`;
                 onAddressFetched(formattedAddress);
             } catch (error) {
                 console.error("Error fetching address:", error);
@@ -42,7 +44,7 @@ const GetCurrentAddress = ({ onAddressFetched }) => {
                 maximumAge: 5000 // Reduced maximumAge to ensure fresh data
             }
         );
-    }, [onAddressFetched]);
+    }, [fetchAddressNow, onAddressFetched]); // Dependency on fetchAddressNow
 
     return null;
 };

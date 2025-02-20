@@ -3,6 +3,8 @@ import './welcomepage.css';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import GetCurrentAddress from './GetCurrentAddress';
+import { FaHome } from "react-icons/fa";
 
 const WelcomeComponent = () => {
   const [wardNo, setWardNo] = useState('');
@@ -13,7 +15,28 @@ const WelcomeComponent = () => {
   const [phonenumber, setPhonenumber] = useState('');
   const [isNotARobot, setIsNotARobot] = useState(false);
   const [loadingOTP, setLoadingOTP] = useState(false);
+  const [isAddressFetched, setIsAddressFetched] = useState(false); // Flag to track if address is fetched
+  const [fetchAddressNow, setFetchAddressNow] = useState(false); // State to trigger fetching address
   const navigate = useNavigate();
+
+  // Function to handle the click of the home icon and trigger fetching the address
+  const handleHomeClick = () => {
+    setIsAddressFetched(false);  // Reset isAddressFetched before triggering address fetch
+    setFetchAddressNow(true);    // Trigger address fetching when home icon is clicked
+  };
+
+  const handleAddressFetched = (fetchedAddress) => {
+    setAddress(fetchedAddress);
+    const addressParts = fetchedAddress.split(',');
+    if (addressParts.length >= 4) {
+      setWardNo(addressParts[1]?.trim() || '');
+      setSelectedLocation(addressParts[2]?.trim() || addressParts[3]?.trim() || '');
+      setPincode(addressParts[5]?.trim() || '');
+      setState(addressParts[4]?.trim() || '');
+      setIsAddressFetched(true); // Set flag to true once the address is fetched
+      setFetchAddressNow(false); // Reset fetchAddressNow to prevent re-fetching
+    }
+  };
 
   const handleWardNoChange = (e) => setWardNo(e.target.value);
   const handleLocationChange = (e) => setSelectedLocation(e.target.value);
@@ -27,19 +50,18 @@ const WelcomeComponent = () => {
 
   const handleNextClick = async () => {
     if (wardNo && selectedLocation && pincode && state && address && phonenumber && isNotARobot) {
-      // Check if the phone number is verified (if OTP is already sent)
       const isPhoneVerified = localStorage.getItem('otp') ? true : false;
-  
+
       if (!isPhoneVerified) {
         toast.error("Please verify your phone number before proceeding.");
-        return; // Stop further execution if phone is not verified
+        return;
       }
-  
+
       const phoneNumber = `+91${phonenumber}`;
       const otp = generateOTP();
       setLoadingOTP(true);
       localStorage.setItem('otp', otp);
-  
+
       try {
         const response = await fetch('https://shresta-1.onrender.com/send-otp', {
           method: 'POST',
@@ -49,13 +71,13 @@ const WelcomeComponent = () => {
             body: `Your OTP code is: ${otp}`,
           }),
         });
-  
+
         const data = await response.json();
         if (data.success) {
           toast.success("OTP sent successfully!");
           navigate('/Pass1');
         } else {
-          toast.error("Please verify your Number.Contact Admin");
+          toast.error("Please verify your Number. Contact Admin.");
         }
       } catch (error) {
         console.error("Error sending OTP:", error);
@@ -67,9 +89,9 @@ const WelcomeComponent = () => {
       toast.error("Please fill in all fields and verify you're not a robot.");
     }
   };
-  
 
   const statesList = [
+    state, 
     'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Goa', 'Gujarat', 'Haryana',
     'Himachal Pradesh', 'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur',
     'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana',
@@ -81,6 +103,15 @@ const WelcomeComponent = () => {
       <ToastContainer />
       <div className="content-box">
         <h1>Welcome to Shreshta</h1>
+        
+        {/* Home icon that triggers address fetching */}
+        <div className="home-icon" onClick={handleHomeClick}>
+          <FaHome size={30} />
+        </div>
+
+        {/* Pass the fetchAddressNow prop to GetCurrentAddress */}
+        <GetCurrentAddress fetchAddressNow={fetchAddressNow} onAddressFetched={handleAddressFetched} />
+
         <div className="ward-selection">
           <label htmlFor="wardNo">Select Ward No (Optional):</label>
           <input type="text" id="wardNo" value={wardNo} onChange={handleWardNoChange} />
@@ -99,9 +130,8 @@ const WelcomeComponent = () => {
         <div className="state-selection">
           <label htmlFor="state">Select State:</label>
           <select id="state" value={state} onChange={handleStateChange}>
-            <option value="">--Select State--</option>
-            {statesList.map((state, index) => (
-              <option key={index} value={state}>{state}</option>
+            {statesList.map((stateOption, index) => (
+              <option key={index} value={stateOption}>{stateOption}</option>
             ))}
           </select>
         </div>
