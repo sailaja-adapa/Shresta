@@ -60,4 +60,5 @@ jobs:
           echo "TOTAL_PR_COUNT: $TOTAL_PR_COUNT"
 
       - name: Debug GitHub Repository Variable
-        run: echo "GitHub Repository: ${{ github.repository }}"
+        run: |
+          echo "GitHub Repository: ${{ github.repository }}"
