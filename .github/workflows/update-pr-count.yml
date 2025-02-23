@@ -43,12 +43,16 @@ jobs:
       - name: Create JSON File
         run: |
           echo '{ "schemaVersion": 1, "label": "Total PRs", "message": "'$TOTAL_PR_COUNT'", "color": "blue", "updated": "'$(date)'" }' > pr-count.json
-
+      - name: Pull latest changes
+        run: |
+            git pull --rebase origin main
+        
       - name: Commit and push changes
         run: |
-          git add pr-count.json
-          git commit -m "Update PR count" || echo "No changes to commit"
-          git push || echo "No changes to push"
+            git add issue-count.json
+            git commit -m "Update issue count" || echo "No changes to commit"
+            git push origin main || (git pull --rebase origin main && git push origin main)
+        
 
       - name: Debug JSON File
         run: cat pr-count.json

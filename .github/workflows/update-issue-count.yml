@@ -42,24 +42,34 @@ jobs:
         run: |
              echo '{ "schemaVersion": 1, "label": "Total Issues", "message": "'$TOTAL_ISSUE_COUNT'", "color": "red" , "updated": "'$(date)'" }' > issue-count.json
              cat issue-count.json 
+
+      - name: Pull latest changes
+        run: |
+               git pull --rebase origin main
+           
       - name: Commit and push changes
         run: |
-            git add issue-count.json
-            git commit -m "Update issue count" || echo "No changes to commit"
-            git push
+               git add issue-count.json
+               git commit -m "Update issue count" || echo "No changes to commit"
+               git push origin main || (git pull --rebase origin main && git push origin main)
+           
+
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Debug JSON File
         run: cat issue-count.json
+
       - name: Debug Variables
         run: |
           echo "OPEN_PR_COUNT: $OPEN_PR_COUNT"
           echo "CLOSED_PR_COUNT: $CLOSED_PR_COUNT"
           echo "TOTAL_PR_COUNT: $TOTAL_PR_COUNT"
+
       - name: Debug GitHub Repository Variable
         run: |
           echo "GitHub Repository: ${{ github.repository }}"
+
       - name: Debug Issue Count
         run: |
           echo "OPEN_ISSUES=$(gh issue list --repo ${{ github.repository }} --state open --json number --jq 'length')"
