@@ -29,7 +29,9 @@
         <td><a href="https://github.com/sailaja-adapa/Shresta/issues" target="_blank"><img alt="Issues" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/sailaja-adapa/Shresta/main/issue-count.json"/>
         </a></td> 
         <td><a href="https://github.com/sailaja-adapa/Shresta/pulls" target="_blank">
-       <img alt="Total PRs" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/sailaja-adapa/Shresta/main/pr-count.json"/></a></td>   
+       <img alt="Total PRs" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/sailaja-adapa/Shresta/main/pr-count.json"/></a></td>  
+       <td>![Total Issues](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/sailaja-adapa/Shresta/main/issue-count.json&cacheSeconds=0)
+</td> 
       </tr>
     </tbody>
   </table>
