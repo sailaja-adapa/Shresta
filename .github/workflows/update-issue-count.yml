@@ -43,8 +43,8 @@ jobs:
              echo '{ "schemaVersion": 1, "label": "Total Issues", "message": "'$TOTAL_ISSUE_COUNT'", "color": "red" , "updated": "'$(date)'" }' > issue-count.json
              cat issue-count.json 
 
-             - name: Reset any unstaged changes before pulling
-             run: |
+      - name: Reset any unstaged changes before pulling
+        run: |
                git reset --hard HEAD  # Discards any unstaged changes
                git clean -fd  # Removes untracked files
                git pull --rebase origin main || echo "No changes to pull"
