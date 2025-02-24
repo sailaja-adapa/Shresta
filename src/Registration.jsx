@@ -6,6 +6,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import { MdEmail } from "react-icons/md";
+import PasswordStrengthBar from 'react-password-strength-bar';
 import { RiLockPasswordFill } from "react-icons/ri";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
@@ -26,6 +27,10 @@ const Registration = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const dbref = collection(db2, "Auth");
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
 
   const signup = async () => {
     const matchEmail = query(dbref, where('Email', '==', email));
@@ -78,6 +83,7 @@ const Registration = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+  
     
     // Simple email validation
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -222,7 +228,7 @@ const Registration = () => {
                 />
               </div>
 
-              <div className='form-group'>
+              {/* <div className='form-group'>
                 <label>Password <span><RiLockPasswordFill className='icon'/></span></label>
                 <div className="password-input-container">
                   <input
@@ -233,14 +239,39 @@ const Registration = () => {
                     onChange={(e) => setPassword(e.target.value)}
                   />
                   {/* Eye icon for showing/hiding password */}
-                  <div
+                  {/* <div
                     className="eye-icon"
                     onClick={() => setShowPassword(!showPassword)} // Toggle showPassword state
                   >
                     {showPassword ? <FaEyeSlash /> : <FaEye />}
                   </div>
                 </div>
-              </div>
+              </div> */}
+              
+              <div className="form-group">
+          <label>
+            Password <RiLockPasswordFill className='icon' />
+          </label>
+          <div className="password-input-container">
+            <input
+              type={showPassword ? 'text' : 'password'}
+              placeholder="Enter your password"
+              required
+              value={password}
+              onChange={handlePasswordChange} // Attach the handler here
+            />
+            <div
+              className="eye-icon"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </div>
+          </div>
+          <PasswordStrengthBar password={password} />
+        </div>
+
+
+
 
               <div className='form-group'>
                 <label>Confirm Password</label>
@@ -272,3 +303,6 @@ const Registration = () => {
 };
 
 export default Registration;
+
+
+
