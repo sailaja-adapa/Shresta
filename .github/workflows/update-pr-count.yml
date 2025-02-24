@@ -43,9 +43,12 @@ jobs:
       - name: Create JSON File
         run: |
           echo '{ "schemaVersion": 1, "label": "Total PRs", "message": "'$TOTAL_PR_COUNT'", "color": "blue", "updated": "'$(date)'" }' > pr-count.json
-      - name: Pull latest changes
+      
+      - name: Reset any unstaged changes before pulling
         run: |
-            git pull --rebase origin main
+          git reset --hard HEAD  # Discards any unstaged changes
+          git pull --rebase origin main
+
         
       - name: Commit and push changes
         run: |
