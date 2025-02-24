@@ -45,7 +45,7 @@ jobs:
 
       - name: Create JSON File
         run: |
-          echo '{ "schemaVersion": 1, "label": "Total Issues", "message": "'$TOTAL_ISSUE_COUNT'", "color": "red", "updated": "'$(date)'" }' > issue-count.json
+          echo '{ "schemaVersion": 1, "label": "Total Issues", "message": "'$TOTAL_ISSUE_COUNT'", "color": "red" }' > issue-count.json
           cat issue-count.json 
 
       - name: Reset any unstaged changes before pulling

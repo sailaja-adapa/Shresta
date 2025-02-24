@@ -53,7 +53,7 @@ jobs:
 
       - name: Create JSON File
         run: |
-          echo '{ "schemaVersion": 1, "label": "Total PRs", "message": "'$TOTAL_PR_COUNT'", "color": "blue", "updated": "'$(date)'" }' > pr-count.json
+          echo '{ "schemaVersion": 1, "label": "Total PRs", "message": "'$TOTAL_PR_COUNT'", "color": "blue"}' > pr-count.json
       
       - name: Reset any unstaged changes before pulling
         run: |
