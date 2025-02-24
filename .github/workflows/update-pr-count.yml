@@ -43,7 +43,7 @@ jobs:
       - name: Get Merged PR Count
         run: |
             echo "MERGED_PR_COUNT=$(gh pr list --repo $REPO --state merged --json number --jq 'length')" >> $GITHUB_ENV
-          env:
+        env:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
 

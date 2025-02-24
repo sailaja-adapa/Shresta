@@ -26,7 +26,8 @@
       <tr>
         <td><a href="https://github.com/sailaja-adapa/Shresta/stargazers" target="_blank"><img alt="Stars" src="https://img.shields.io/github/stars/sailaja-adapa/Shresta?style=for-the-badge&logo=github"/></a></td>
         <td><a href="https://github.com/sailaja-adapa/Shresta/forks" target="_blank"><img alt="Forks" src="https://img.shields.io/github/forks/sailaja-adapa/Shresta?style=for-the-badge&logo=git&logoColor=white"/></a></td>
-        <td><a href="https://github.com/sailaja-adapa/Shresta/issues" target="_blank"><img alt="Issues" src="https://img.shields.io/github/issues/sailaja-adapa/Shresta?style=for-the-badge&logo=target&color=red"/></a></td> 
+        <td><a href="https://github.com/sailaja-adapa/Shresta/issues" target="_blank"><img alt="Issues" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/sailaja-adapa/Shresta/main/issue-count.json"/>
+        </a></td> 
         <td><a href="https://github.com/sailaja-adapa/Shresta/pulls" target="_blank">
        <img alt="Total PRs" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/sailaja-adapa/Shresta/main/pr-count.json"/></a></td>   
       </tr>
