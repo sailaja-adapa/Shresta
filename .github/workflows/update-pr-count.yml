@@ -39,9 +39,17 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+
+      - name: Get Merged PR Count
+        run: |
+            echo "MERGED_PR_COUNT=$(gh pr list --repo $REPO --state merged --json number --jq 'length')" >> $GITHUB_ENV
+          env:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+
       - name: Calculate Total PRs
         run: |
-          echo "TOTAL_PR_COUNT=$((OPEN_PR_COUNT + CLOSED_PR_COUNT))" >> $GITHUB_ENV
+          echo "TOTAL_PR_COUNT=$((OPEN_PR_COUNT + CLOSED_PR_COUNT + MERGED_PR_COUNT))" >> $GITHUB_ENV
 
       - name: Create JSON File
         run: |

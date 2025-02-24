@@ -77,6 +77,6 @@ jobs:
 
       - name: Debug Issue Count
         run: |
-          echo "OPEN_ISSUES=$(gh issue list --repo $REPO --state open --json number --jq 'length')"
+          echo "TOTAL_ISSUES=$(( $(gh issue list --repo $REPO --state open --json number --jq 'length') + $(gh issue list --repo $REPO --state closed --json number --jq 'length') ))"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
