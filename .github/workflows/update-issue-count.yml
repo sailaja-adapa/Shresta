@@ -43,21 +43,20 @@ jobs:
              echo '{ "schemaVersion": 1, "label": "Total Issues", "message": "'$TOTAL_ISSUE_COUNT'", "color": "red" , "updated": "'$(date)'" }' > issue-count.json
              cat issue-count.json 
 
-      - name: Reset any unstaged changes before pulling
-        run: |
+             - name: Reset any unstaged changes before pulling
+             run: |
                git reset --hard HEAD  # Discards any unstaged changes
-               git pull --rebase origin main
-           
-           
+               git clean -fd  # Removes untracked files
+               git pull --rebase origin main || echo "No changes to pull"
+     
       - name: Commit and push changes
         run: |
                git add issue-count.json
                git commit -m "Update issue count" || echo "No changes to commit"
-               git push origin main || (git pull --rebase origin main && git push origin main)
-           
-
+               git push --force origin main  # Force push to avoid conflicts
         env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+     
 
       - name: Debug JSON File
         run: cat issue-count.json
