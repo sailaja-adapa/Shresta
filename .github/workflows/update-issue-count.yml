@@ -15,6 +15,9 @@ jobs:
       issues: read 
     runs-on: ubuntu-latest
 
+    env:
+      REPO: "sailaja-adapa/Shresta"  # Set the original repository
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -24,57 +27,56 @@ jobs:
           git config --global user.email "github-actions@github.com"
           git config --global user.name "GitHub Actions"
       
-
       - name: Get Open Issues Count
-        run: echo "OPEN_ISSUE_COUNT=$(gh issue list --repo sailaja-adapa/Shresta  --state open --json number --jq 'length')" >> $GITHUB_ENV
+        run: |
+          echo "OPEN_ISSUE_COUNT=$(gh issue list --repo $REPO --state open --json number --jq 'length')" >> $GITHUB_ENV
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get Closed Issues Count
-        run: echo "CLOSED_ISSUE_COUNT=$(gh issue list --repo sailaja-adapa/Shresta --state closed --json number --jq 'length')" >> $GITHUB_ENV
+        run: |
+          echo "CLOSED_ISSUE_COUNT=$(gh issue list --repo $REPO --state closed --json number --jq 'length')" >> $GITHUB_ENV
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Calculate Total Issues
-        run: echo "TOTAL_ISSUE_COUNT=$(( $OPEN_ISSUE_COUNT + $CLOSED_ISSUE_COUNT ))" >> $GITHUB_ENV
+        run: |
+          echo "TOTAL_ISSUE_COUNT=$((OPEN_ISSUE_COUNT + CLOSED_ISSUE_COUNT))" >> $GITHUB_ENV
 
       - name: Create JSON File
         run: |
-             echo '{ "schemaVersion": 1, "label": "Total Issues", "message": "'$TOTAL_ISSUE_COUNT'", "color": "red" , "updated": "'$(date)'" }' > issue-count.json
-             cat issue-count.json 
+          echo '{ "schemaVersion": 1, "label": "Total Issues", "message": "'$TOTAL_ISSUE_COUNT'", "color": "red", "updated": "'$(date)'" }' > issue-count.json
+          cat issue-count.json 
 
       - name: Reset any unstaged changes before pulling
         run: |
-               git reset --hard HEAD  # Discards any unstaged changes
-               git clean -fd  # Removes untracked files
-               git pull --rebase origin main || echo "No changes to pull"
+          git reset --hard HEAD  # Discards any unstaged changes
+          git clean -fd  # Removes untracked files
+          git pull --rebase origin main || echo "No changes to pull"
      
       - name: Commit and push changes
         run: |
-               git add issue-count.json
-               git commit -m "Update issue count" || echo "No changes to commit"
-               git push --force origin main  # Force push to avoid conflicts
+          git add issue-count.json
+          git commit -m "Update issue count" || echo "No changes to commit"
+          git push --force origin main  # Force push to avoid conflicts
         env:
-               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-     
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Debug JSON File
         run: cat issue-count.json
 
       - name: Debug Variables
         run: |
-          echo "OPEN_PR_COUNT: $OPEN_PR_COUNT"
-          echo "CLOSED_PR_COUNT: $CLOSED_PR_COUNT"
-          echo "TOTAL_PR_COUNT: $TOTAL_PR_COUNT"
+          echo "OPEN_ISSUE_COUNT: $OPEN_ISSUE_COUNT"
+          echo "CLOSED_ISSUE_COUNT: $CLOSED_ISSUE_COUNT"
+          echo "TOTAL_ISSUE_COUNT: $TOTAL_ISSUE_COUNT"
 
       - name: Debug GitHub Repository Variable
         run: |
-          echo "GitHub Repository: ${{ github.repository }}"
+          echo "Using Repository: $REPO"
 
       - name: Debug Issue Count
         run: |
-          echo "OPEN_ISSUES=$(gh issue list --repo ${{ github.repository }} --state open --json number --jq 'length')"
+          echo "OPEN_ISSUES=$(gh issue list --repo $REPO --state open --json number --jq 'length')"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
-   
