@@ -3,62 +3,71 @@
   position: relative;
   width: 100%;
   height: 100vh;
-  background-image: url('./otp1.jpg'); /* Set the background image */
-  background-size: cover; /* Ensure the image covers the entire background */
-  background-position: center; /* Center the image */
+  background-image: url('./otp2.jpg'); /* Background image */
+  background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 /* Styling for the form wrapper */
 .otp-form-wrapper {
-  background: rgba(255, 255, 255, 0.9); /* Slightly increased opacity for clarity */
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.95); /* Increased opacity for better clarity */
+  padding: 35px; /* Increased padding for a bigger container */
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
   width: 100%;
-  max-width: 400px;
+  max-width: 450px; /* Increased width for better spacing */
   text-align: center;
 }
 
 /* Form heading styling */
 .otp-form h2 {
-  margin-bottom: 20px;
-  font-size: 26px;
-  color: #333;
+  margin-bottom: 25px;
+  font-size: 28px;
+  color: #222; /* Darker color for better contrast */
+  font-weight: 600;
 }
 
 /* Input field styling */
 .otp-input {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
+  border: 2px solid #007bff;
+  border-radius: 6px;
+  font-size: 18px; /* Increased font size */
+  color: #333 !important; /* Ensured text is visible */
+  background: #f8f9fa; /* Light background for contrast */
   outline: none;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease-in-out;
+}
+
+.otp-input::placeholder{
+  color: #333 !important;
 }
 
 /* Focus effect on input field */
 .otp-input:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  border-color: #0056b3;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
+  background: white;
 }
 
 /* Submit button styling */
 .otp-submit {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 5px;
-  font-size: 16px;
+  border-radius: 6px;
+  font-size: 18px;
   cursor: pointer;
+  font-weight: bold;
   transition: background-color 0.3s ease, transform 0.2s;
 }
 
@@ -73,14 +82,9 @@
   transform: scale(0.95);
 }
 
-/* Toast container for messages */
-.toast-container {
-  z-index: 9999; /* Ensure toast notifications appear above other content */
-}
-
 /* Error message styling */
 .otp-error-message {
   color: red;
   margin-top: 10px;
-  font-size: 14px;
+  font-size: 15px;
 }
