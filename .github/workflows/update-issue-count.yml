@@ -100,7 +100,8 @@ jobs:
           echo "TOTAL_ISSUE_COUNT: $TOTAL_ISSUE_COUNT"
 
       - name: Debug Repository Name
-        run: echo "Using Repository: $REPO"
+        run:  |
+          echo "Using Repository: $REPO"
 
       - name: Verify Issue Count Calculation (Fix)
         run: |
