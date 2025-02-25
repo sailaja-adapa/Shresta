@@ -23,9 +23,9 @@
     </thead>
     <tbody>
       <tr>
-        <td><a href="https://github.com/sailaja-adapa/Shresta/stargazers" target="_blank"><img alt="Stars" src="https://img.shields.io/github/stars/sailaja-adapa/Shresta?style=for-the-badge&logo=git"/></a></td>
+        <td><a href="https://github.com/sailaja-adapa/Shresta/stargazers" target="_blank"><img alt="Stars" src="https://img.shields.io/github/stars/sailaja-adapa/Shresta?style=for-the-badge&logo=github"/></a></td>
         <td><a href="https://github.com/sailaja-adapa/Shresta/forks" target="_blank"><img alt="Forks" src="https://img.shields.io/github/forks/sailaja-adapa/Shresta?style=for-the-badge&logo=git&logoColor=white"/></a></td>
-        <td><img alt="Total Issues" src="https://img.shields.io/github/issues-search/sailaja-adapa/Shresta?query=is:issue&label=Issues&color=blue&style=flat-square&logo=git"/></td>
+        <td><img alt="Total Issues" src="https://img.shields.io/github/issues-search/sailaja-adapa/Shresta?query=is:issue&label=Issues&color=blue&style=flat-square&logo=github"/></td>
         <td><img alt="Total PRs" src="https://img.shields.io/github/issues-search/sailaja-adapa/Shresta?query=is:pr&label=Pull%20Requests&color=blue&style=flat-square&logo=git"/></td>
       </tr>
     </tbody>
@@ -108,6 +108,33 @@ To get started with **Shresta-City Insight** 🚀, make sure you have **Node.js*
 - **OTP Authentication** using Firebase for secure user verification.
 - **Real-time Notifications** via SMS using Twilio.
 - **Scalable Infrastructure** with Firebase services.
+
+## Workflow
+
+  + **Citizen Workflow 👩‍🦰:**
+    - The user is required to register using their Google email ID (@gmail.com) for authentication and must provide the required details.📩
+    - The user logs in using registered email Id and password.🔐
+    - The user provides their location manually or allows it to be retrieved via an API. 📍
+    - An OTP is sent to their registered mobile number for verification, which must be entered to proceed. 🔢
+      <br>  
+      ![OTP message](OTP_msg.png)
+      <br>  
+    
+    - Upon successful verification, the user is redirected to the Complaint Submission Portal where they can report civic issues by uploading relevant images or documents. 📸📁
+    - Alternatively, users can utilize voice input to lodge a complaint, which is transcribed into text via a Speech-to-Text API. 🎙️🗣️
+    - After submitting the complaint, the user is navigated to the Thank you Page, where they have the option to provide feedback on their experience. ✍️
+    
+  + **Officer Registration & Complaint Management Process 👮‍♂️📋**
+    
+
+    - Officers are required to register using an official email ID with the "@svecw.edu.in" domain, as this domain is exclusively designated for authorized personnel. ✉️✅
+    - Upon successful login, officers gain access to the Complaint Management Dashboard, where they can review all submitted complaints along with their corresponding images. 🖥️📸
+    - When an officer marks a complaint as resolved and selects the delete option, an automated notification is sent to the complainant via Twilio, informing them of the resolution. 📩🔔
+      <br>  
+      ![Issue Resolved message](Resolved_message.png) 
+      <br>  
+    
+
 
 ## Our Goals 🎯
 
