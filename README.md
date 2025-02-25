@@ -26,8 +26,11 @@
       <tr>
         <td><a href="https://github.com/sailaja-adapa/Shresta/stargazers" target="_blank"><img alt="Stars" src="https://img.shields.io/github/stars/sailaja-adapa/Shresta?style=for-the-badge&logo=github"/></a></td>
         <td><a href="https://github.com/sailaja-adapa/Shresta/forks" target="_blank"><img alt="Forks" src="https://img.shields.io/github/forks/sailaja-adapa/Shresta?style=for-the-badge&logo=git&logoColor=white"/></a></td>
-        <td><a href="https://github.com/sailaja-adapa/Shresta/issues" target="_blank"><img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/sailaja-adapa/Shresta/main/issue-count.json&cacheSeconds=0" alt="Total Issues"/></a></td>
-        <td><a href="https://github.com/sailaja-adapa/Shresta/pulls" target="_blank"><img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/sailaja-adapa/Shresta/main/pr-count.json&cacheSeconds=0" alt="Total PRs"/></a></td>
+        ![Total Issues](https://img.shields.io/github/issues-search/octocat/hello-world?query=is:issue)
+        ![Total PRs](https://img.shields.io/github/issues-search/octocat/hello-world?query=is:pr)
+
+        <!-- <td><a href="https://github.com/sailaja-adapa/Shresta/issues" target="_blank"><img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/sailaja-adapa/Shresta/main/issue-count.json&cacheSeconds=0" alt="Total Issues"/></a></td>
+        <td><a href="https://github.com/sailaja-adapa/Shresta/pulls" target="_blank"><img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/sailaja-adapa/Shresta/main/pr-count.json&cacheSeconds=0" alt="Total PRs"/></a></td> -->
       </tr>
     </tbody>
   </table>
