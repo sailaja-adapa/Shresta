@@ -46,6 +46,8 @@ jobs:
 
       - name: Create JSON File
         run: |
+          echo "Using Total Issues: $TOTAL_ISSUE_COUNT"
+          rm -f issue-count.json  # Ensure old file is removed
           echo '{ "schemaVersion": 1, "label": "Total Issues", "message": "'"$TOTAL_ISSUE_COUNT"'", "color": "red" }' > issue-count.json
           cat issue-count.json 
 
