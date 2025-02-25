@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      REPO: "sailaja-adapa/Shresta"  # Set the original repository
+      REPO: "sailaja-adapa/Shresta"  # Set the repository name
 
     steps:
       - name: Checkout Repository
@@ -27,51 +27,69 @@ jobs:
           git config --global user.email "github-actions@github.com"
           git config --global user.name "GitHub Actions"
       
+      # Fetch Open Issues Count
       - name: Get Open Issues Count
         run: |
-          echo "OPEN_ISSUE_COUNT=$(gh issue list --repo $REPO --state open --json number --jq 'length')" >> $GITHUB_ENV
+          OPEN_ISSUE_COUNT=$(gh issue list --repo $REPO --state open --json number --jq 'length')
+          echo "OPEN_ISSUE_COUNT=$OPEN_ISSUE_COUNT" >> $GITHUB_ENV
+          echo "Open Issues: $OPEN_ISSUE_COUNT"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # Fetch Closed Issues Count
       - name: Get Closed Issues Count
         run: |
-          echo "CLOSED_ISSUE_COUNT=$(gh issue list --repo $REPO --state closed --json number --jq 'length')" >> $GITHUB_ENV
+          CLOSED_ISSUE_COUNT=$(gh issue list --repo $REPO --state closed --json number --jq 'length')
+          echo "CLOSED_ISSUE_COUNT=$CLOSED_ISSUE_COUNT" >> $GITHUB_ENV
+          echo "Closed Issues: $CLOSED_ISSUE_COUNT"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # Calculate Total Issues (Fixed)
       - name: Calculate Total Issues
         run: |
           TOTAL_ISSUE_COUNT=$((OPEN_ISSUE_COUNT + CLOSED_ISSUE_COUNT))
           echo "TOTAL_ISSUE_COUNT=$TOTAL_ISSUE_COUNT" >> $GITHUB_ENV
           echo "Final Total Issues: $TOTAL_ISSUE_COUNT"
 
+      # Remove Old JSON File Before Writing (Fix)
+      - name: Remove Old JSON File
+        run: rm -f issue-count.json
+
+      # Create Updated JSON File
       - name: Create JSON File
         run: |
-          echo "Using Total Issues: $TOTAL_ISSUE_COUNT"
-          rm -f issue-count.json  # Ensure old file is removed
           echo '{ "schemaVersion": 1, "label": "Total Issues", "message": "'"$TOTAL_ISSUE_COUNT"'", "color": "red" }' > issue-count.json
-          cat issue-count.json 
+          echo "Updated issue-count.json:"
+          cat issue-count.json
 
-      - name: Check Staged Files Before Commit
+      # Check for Changes Before Committing (Fix)
+      - name: Check for Changes
         run: |
           git status
-          git diff issue-count.json
+          git diff issue-count.json || echo "No changes detected"
 
-
-      - name: Reset any unstaged changes before pulling
+      # Reset Unstaged Changes & Pull Latest Code (Fix)
+      - name: Reset and Pull Latest Changes
         run: |
           git reset --hard HEAD  # Discards any unstaged changes
           git clean -fd  # Removes untracked files
           git pull --rebase origin main || echo "No changes to pull"
-     
-      - name: Commit and push changes
+
+      # Commit and Push Changes (Fix)
+      - name: Commit and Push Changes
         run: |
-          git add -f issue-count.json
-          git commit -m "Update issue count to $TOTAL_ISSUE_COUNT" || echo "No changes to commit"
-          git push --force origin main  # Force push to avoid conflicts
+          if git diff --quiet issue-count.json; then
+            echo "No changes to commit"
+          else
+            git add -f issue-count.json
+            git commit -m "Update issue count to $TOTAL_ISSUE_COUNT"
+            git push origin main
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # Debug Steps for Verification
       - name: Debug JSON File
         run: cat issue-count.json
 
@@ -81,12 +99,11 @@ jobs:
           echo "CLOSED_ISSUE_COUNT: $CLOSED_ISSUE_COUNT"
           echo "TOTAL_ISSUE_COUNT: $TOTAL_ISSUE_COUNT"
 
-      - name: Debug GitHub Repository Variable
-        run: |
-          echo "Using Repository: $REPO"
+      - name: Debug Repository Name
+        run: echo "Using Repository: $REPO"
 
-      - name: Debug Issue Count
+      - name: Verify Issue Count Calculation (Fix)
         run: |
-          echo "TOTAL_ISSUES=$(( $(gh issue list --repo $REPO --state open --json number --jq 'length') + $(gh issue list --repo $REPO --state closed --json number --jq 'length') ))"
+          echo "Rechecking total issues: $(( $(gh issue list --repo $REPO --state open --json number --jq 'length') + $(gh issue list --repo $REPO --state closed --json number --jq 'length') ))"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
