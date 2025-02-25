@@ -1,11 +1,11 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './Layout';
 import Contact from './Contact';
 import Login from './Login';
 import StoreImageTextFirebase from './StoreImageTextFirebase.jsx';
 import WelcomePage from './WelcomePage';
-import Registration from './Registration';
+import Registration, { AdditionalDetailsPage, GeneralDetailsPage } from './Registration';
 import Aboutus from './Aboutus';
 import GetCurrentAddress from './GetCurrentAddress.jsx';
 import ForgotPassword from './Forpas';
@@ -29,7 +29,11 @@ const App = () => {
         <Route path="/" element={<Layout />} />
         <Route path="/login" element={<Login />} />
         <Route path="/Contact" element={<Contact />} />
-        <Route path="/register" element={<Registration />} />
+        <Route path="/register" element={<Registration />}>
+          <Route path='/register' element={<Navigate to={'general'} />} />
+          <Route path='general' element={<GeneralDetailsPage />} />
+          <Route path='additional-details' element={<AdditionalDetailsPage />} />
+        </Route>
         <Route path="/GetCurrentAddress" element={<GetCurrentAddress />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/setpass" element={<Setpass />} />
