@@ -23,10 +23,10 @@
     </thead>
     <tbody>
       <tr>
-        <td><a href="https://github.com/sailaja-adapa/Shresta/stargazers" target="_blank"><img alt="Stars" src="https://img.shields.io/github/stars/sailaja-adapa/Shresta?style=for-the-badge&logo=github"/></a></td>
+        <td><a href="https://github.com/sailaja-adapa/Shresta/stargazers" target="_blank"><img alt="Stars" src="https://img.shields.io/github/stars/sailaja-adapa/Shresta?style=for-the-badge&logo=git"/></a></td>
         <td><a href="https://github.com/sailaja-adapa/Shresta/forks" target="_blank"><img alt="Forks" src="https://img.shields.io/github/forks/sailaja-adapa/Shresta?style=for-the-badge&logo=git&logoColor=white"/></a></td>
-        <td><img alt="Total Issues" src="https://img.shields.io/github/issues-search/sailaja-adapa/Shresta?query=is:issue&label=Issues&color=blue&style=flat-square&logo=github"/></td>
-        <td><img alt="Total PRs" src="https://img.shields.io/github/issues-search/sailaja-adapa/Shresta?query=is:pr&label=Pull%20Requests&color=blue&style=flat-square&logo=github"/></td>
+        <td><img alt="Total Issues" src="https://img.shields.io/github/issues-search/sailaja-adapa/Shresta?query=is:issue&label=Issues&color=blue&style=flat-square&logo=git"/></td>
+        <td><img alt="Total PRs" src="https://img.shields.io/github/issues-search/sailaja-adapa/Shresta?query=is:pr&label=Pull%20Requests&color=blue&style=flat-square&logo=git"/></td>
       </tr>
     </tbody>
   </table>
