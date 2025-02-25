@@ -43,6 +43,7 @@ jobs:
         run: |
           TOTAL_ISSUE_COUNT=$((OPEN_ISSUE_COUNT + CLOSED_ISSUE_COUNT))
           echo "TOTAL_ISSUE_COUNT=$TOTAL_ISSUE_COUNT" >> $GITHUB_ENV
+          echo "Final Total Issues: $TOTAL_ISSUE_COUNT"
 
       - name: Create JSON File
         run: |
@@ -50,6 +51,12 @@ jobs:
           rm -f issue-count.json  # Ensure old file is removed
           echo '{ "schemaVersion": 1, "label": "Total Issues", "message": "'"$TOTAL_ISSUE_COUNT"'", "color": "red" }' > issue-count.json
           cat issue-count.json 
+
+      - name: Check Staged Files Before Commit
+        run: |
+          git status
+          git diff issue-count.json
+
 
       - name: Reset any unstaged changes before pulling
         run: |
@@ -59,8 +66,8 @@ jobs:
      
       - name: Commit and push changes
         run: |
-          git add issue-count.json
-          git commit -m "Update issue count" || echo "No changes to commit"
+          git add -f issue-count.json
+          git commit -m "Update issue count to $TOTAL_ISSUE_COUNT" || echo "No changes to commit"
           git push --force origin main  # Force push to avoid conflicts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
