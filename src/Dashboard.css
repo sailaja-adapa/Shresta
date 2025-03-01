@@ -4,56 +4,7 @@ body, html {
   font-family: Arial, sans-serif; /* Optional: For better typography */
 }
 
-.dashboard-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh; /* Full viewport height */
-  background: url('https://w0.peakpx.com/wallpaper/648/370/HD-wallpaper-welcome-autumn-digital-art-background-fall-autumn-leaves-leaf.jpg') no-repeat center center fixed; /* Background image */
-  background-size: cover; /* Ensure the background image covers the whole page */
-}
 
-.content-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background for better text readability */
-  border: 2px solid #000; /* Black border */
-  border-radius: 8px; /* Rounded corners */
-  padding: 20px;
-  max-width: 500px; /* Adjust as needed */
-  width: 100%;
-  box-sizing: border-box; /* Ensure padding and border are included in width */
-}
-
-.text-content {
-  color: #fff; /* Ensure text is readable on the background */
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Center children horizontally */
-  max-width: 60%; /* Adjust width as needed */
-}
-
-.button {
-  background-color: #007bff; /* Button color */
-  color: #fff; /* Text color on button */
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  margin-top: 10px;
-  transition: background-color 0.3s; /* Smooth transition for hover effect */
-}
-
-.button:hover {
-  background-color: #0056b3; /* Darker shade for hover effect */
-}
-
-.complaint-image {
-  width: 150px; /* Adjust width as needed */
-  height: 170px; /* Adjust height as needed */
-  object-fit: cover; /* Maintain aspect ratio and fill the specified dimensions */
-  border-radius: 8px; /* Optional: Rounded corners for image */
-  margin-left: 20px; /* Space between image and text/content */
+.main-dashboard {
+  background: url("./dashboard2.jpg") no-repeat center center/cover;
 }

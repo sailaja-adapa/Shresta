@@ -59,7 +59,7 @@ const Navbar = () => {
         </button>
       </div>
 
-      <ul className={`nav-links ${isOpen ? 'active' : ''}`}>
+      <ul className={`nav-links ${isOpen ? 'active' : ''} ${isOpen ? 'dropdown' : ''}`} style={isOpen ? navStyle : {}}>
         <li className="center-align">
           <FaHome className="nav-icon" />
           <Link to="/">Home</Link>

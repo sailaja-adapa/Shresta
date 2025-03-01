@@ -164,6 +164,11 @@
     display: flex;
   }
 
+  .nav-links.dropdown {
+    background-color: inherit; /* Inherit the dynamic background color */
+    backdrop-filter: inherit; /* Inherit the dynamic backdrop filter */
+  }
+
   .nav-links li {
     width: 100%;
     display: flex;

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import firebase from './firebase'; // Import firebase initialization
-import './Pass1.css'; // Assuming you have CSS for styling
 import { useNavigate } from 'react-router-dom';
 import './Forpas.css';
 import image from './forpas.jpg';

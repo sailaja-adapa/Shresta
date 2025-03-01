@@ -57,9 +57,14 @@
   margin-bottom: 15px;
   border: 2px solid #ccc;
   border-radius: 6px;
-  font-size: 16px;
+  font-size: larger;
   outline: none;
   transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  color: black !important;
+}
+
+.forgot-password-input::placeholder {
+  color: #333 !important;
 }
 
 .forgot-password-input:focus {

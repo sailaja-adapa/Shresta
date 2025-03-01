@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@400;600&display=swap');
 
 body {
-  background-image: url('https://media.istockphoto.com/id/1434782845/vector/purple-light-defocused-blurred-motion-gradient-abstract-background-vector.jpg?s=612x612&w=0&k=20&c=XdziynSGjaoVCLk9LI1A70ibGgpUi2IZ23PtkOWdjOM=');
+  background-image: url("/src/bg-img.jpg");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -11,62 +11,84 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+.nav-links li {
+  & a {
+    color: #dfdfdf !important;
+  }
+
+  & svg {
+    color: #dfdfdf;
+  }
+}
+
 .registration-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(32, 143, 212); /* Skyblue color around the container */
+  /* background-color: rgb(32, 143, 212); */
+  /* Skyblue color around the container */
   min-height: 100vh;
   padding: 2rem;
 }
 
 .container-with-image {
   display: flex;
-  flex-wrap: wrap; /* Allow the items to wrap when needed */
-  border: 3px solid #000; /* Black border around the container */
+  flex-wrap: wrap;
   border-radius: 12px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  overflow: hidden; /* Prevent content from spilling over the rounded corners */
+  overflow: hidden;
   max-width: 1200px;
   width: 100%;
-  background-color: #fff; /* Keep background white inside the container */
+  background-color: #fff;
   margin-top: 4rem;
 }
 
+.image-box {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+}
+
 .image-side {
-  flex: 1;
-  background-image: url('https://static.vecteezy.com/system/resources/previews/003/689/228/non_2x/online-registration-or-sign-up-login-for-account-on-smartphone-app-user-interface-with-secure-password-mobile-application-for-ui-web-banner-access-cartoon-people-illustration-vector.jpg');
-  background-size: cover;
-  background-position: -105% center; /* Move the image slightly to the left */
-  min-height: 300px; /* Enforce a minimum height */
+  width: 800px;
 }
 
 .form-side {
   flex: 1;
-  padding: 2rem;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
 .form-wrapper {
-  background: rgba(255, 255, 255, 0.95); /* White background with slight transparency */
-  padding: 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  /* White background with slight transparency */
+  padding: 1rem;
   max-width: 100%;
   border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(8px);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeAnim 0.5s 1;
 }
 
-.form-wrapper:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+@keyframes fadeAnim {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 100%;
+  }
 }
 
 .registration-form {
   width: 100%;
-  padding: 1rem; /* Added padding here */
+  padding: 1rem;
+  /* Added padding here */
 }
 
 .registration-form h2 {
@@ -79,23 +101,26 @@ body {
 }
 
 .registration-form .form-group {
-  width: 100%; /* Ensure full width */
-  margin-bottom: 1rem; /* Keep some space between groups */
+  margin: 0 auto;
+  max-width: 100% !important;
 }
 
 .registration-form input,
 .registration-form select {
-  width: 100%; /* Ensures input fields match the form's width */
+  width: 100%;
+  /* Ensures input fields match the form's width */
   padding: 0.75rem;
   margin-bottom: 1rem;
   border: 1px solid #ccc;
   border-radius: 8px;
   font-size: 1rem;
-  box-sizing: border-box; /* Ensures padding is included in width */
+  box-sizing: border-box;
+  /* Ensures padding is included in width */
 }
 
-.registration-form button {
-  width: 100%; /* Make button span the full width */
+.registration-button {
+  width: 100%;
+  /* Make button span the full width */
   padding: 0.75rem;
   background-color: #007bff;
   border: none;
@@ -103,20 +128,27 @@ body {
   color: #fff;
   font-size: 1.1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: filter 0.3s ease;
+  width: 20em;
+  justify-content: center;
 }
 
-.registration-form button:hover {
-  background-color: #0056b3;
+.registration-button:hover {
+  filter: brightness(0.9);
 }
 
-.registration-form .login-link {
+.back-btn {
+  background-color: #3434341f;
+  color: black;
+}
+
+.login-link {
   color: #007bff;
   font-weight: 600;
   cursor: pointer;
 }
 
-.registration-form .login-link:hover {
+.login-link:hover {
   color: #0056b3;
   text-decoration: underline;
 }
@@ -128,35 +160,53 @@ body {
 }
 
 /* Responsive Styles */
-@media (max-width: 1024px) {
+@media (max-width: 851px) {
   .container-with-image {
-    flex-direction: column; /* Stack image and form vertically on tablet and below */
+    flex-direction: column;
+    /* Stack image and form vertically on tablet and below */
+  }
+
+  .image-box {
+    width: 100%;
+
+    & img {
+      object-fit: contain;
+      width: 400px;
+    }
   }
 
   .image-side {
-    height: 250px; /* Adjust image height on medium-sized screens */
-    background-position: center; /* Center the background image */
+    /* Adjust image height on medium-sized screens */
+    background-position: center;
+    /* Center the background image */
   }
 
   .form-side {
     padding: 1.5rem;
   }
-  
-  .registration-form h2 {
-    font-size: 1.8rem; /* Adjust font size for smaller screens */
+
+  .form-wrapper {
+    max-height: fit-content;
   }
 
-  .registration-form .form-group{
-    margin: 0 auto;
+  .registration-form h2 {
+    font-size: 1.8rem;
+    /* Adjust font size for smaller screens */
   }
-  
+
   .registration-form input,
   .registration-form select {
-    font-size: 0.9rem; /* Adjust input field font size */
+    font-size: 0.9rem;
+    /* Adjust input field font size */
   }
 
   .registration-form button {
-    font-size: 1rem; /* Adjust button font size */
+    font-size: 1rem;
+    /* Adjust button font size */
+  }
+
+  .img-btn-box {
+    display: none;
   }
 }
 
@@ -166,8 +216,10 @@ body {
   }
 
   .image-side {
-    height: 200px; /* Adjust image size on smaller screens */
-    background-position: center; /* Reset position on small screens */
+    height: 200px;
+    /* Adjust image size on smaller screens */
+    background-position: center;
+    /* Reset position on small screens */
   }
 
   .form-side {
@@ -175,57 +227,74 @@ body {
   }
 
   .registration-form h2 {
-    font-size: 1.5rem; /* Smaller heading size for mobile */
+    font-size: 1.5rem;
+    /* Smaller heading size for mobile */
     margin-bottom: 1rem;
   }
 
   .registration-form input,
   .registration-form select {
-    font-size: 0.9rem; /* Adjust font size for smaller inputs */
-    padding: 0.65rem; /* Smaller padding for mobile screens */
+    font-size: 0.9rem;
+    /* Adjust font size for smaller inputs */
+    padding: 0.65rem;
+    /* Smaller padding for mobile screens */
   }
 
   .registration-form button {
-    font-size: 1rem; /* Adjust button font size */
+    font-size: 1rem;
+    /* Adjust button font size */
   }
 }
 
 @media (max-width: 480px) {
   .registration-container {
-    padding: 1rem; /* Less padding for very small screens */
+    padding: 1rem;
+    /* Less padding for very small screens */
   }
 
   .form-wrapper {
-    padding: 1.5rem;
+    padding: .5rem;
   }
 
   .registration-form {
-    padding: 1rem; /* Reduce padding for mobile */
+    padding: 1rem;
+    /* Reduce padding for mobile */
   }
 
   .registration-form h2 {
-    font-size: 1.3rem; /* Even smaller heading for mobile */
+    font-size: 1.3rem;
+    /* Even smaller heading for mobile */
     margin-bottom: 0.8rem;
   }
 
   .registration-form input,
   .registration-form select {
-    font-size: 0.85rem; /* Smaller font for inputs */
-    padding: 0.5rem; /* Reduced padding for mobile screens */
+    font-size: 0.85rem;
+    /* Smaller font for inputs */
+    padding: 0.5rem;
+    /* Reduced padding for mobile screens */
   }
 
   .registration-form button {
     font-size: 1rem;
-    padding: 0.6rem; /* Adjust padding for smaller screens */
+    padding: 0.6rem;
+    /* Adjust padding for smaller screens */
   }
 }
 
 /* Prevent input elements from breaking in smaller containers */
 .form-group input {
   width: 100% !important;
+  background-color: transparent;
 }
 
 .eye-icon {
   position: absolute;
   bottom: 0px;
+}
+
+.d-inline {
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
 }

@@ -5,7 +5,7 @@
   justify-content: center;
   align-items: center;
   background: url('https://static.vecteezy.com/system/resources/thumbnails/025/055/170/large/smartphone-app-map-with-location-icon-and-route-web-animation-of-navigation-in-a-big-city-app-screen-of-traveling-city-map-background-localization-gps-travel-and-navigation-concept-video.jpg') no-repeat center center/cover;
-  color: #100202;
+  color: #100201;
 }
 
 .content-box {
@@ -54,19 +54,36 @@ input[type="text"] {
   border: 1px solid #1b1818;
 }
 
-textarea {
-  resize: vertical;
-  min-height: 100px;
+.address-container {
+  position: relative;
+  height: 100%;
 }
 
-.address {
-  position: relative;
+.address textarea {
+  width: 100%;
+  height: 150px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 .location-icon {
   position: absolute;
-  right: 10px;
-  top: 50%;
+  bottom: 2px;
+  left: 2px;
+  cursor: pointer;
+  color: rgba(255, 0, 0, 0.8) !important;  /* Adjust color as needed */
+}
+
+.location-icon:hover {
+  color: red !important;   /* Optional: Change color on hover */
+}
+
+.location-icon {
+  position: absolute;
+  left: 92%;
+  bottom: 10px;
   transform: translateY(-50%);
   font-size: 1.5em;
   color: #333;
