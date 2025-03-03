@@ -37,7 +37,8 @@ const Thankyou = () => {
           background: "rgba(0, 0, 0, 0.7)",
           padding: { xs: "20px", sm: "40px" },
           borderRadius: "15px",
-          width: { xs: "90%", sm: "400px" },
+          width: { xs: "95%", sm: "500px" },
+          height: { xs: "auto", sm: "auto" },
           boxShadow: "0 8px 16px rgba(0, 0, 0, 0.5)",
         }}
       >
@@ -52,14 +53,14 @@ const Thankyou = () => {
             display: "inline-block",
             fontSize: { xs: "2rem", sm: "2.5rem" },
           }}
-        >
-          Thank You! 🙏🎉
+          >
+            Thank You! 🙏🎉
         </Typography>
 
-        <Typography variant="body1" sx={{ fontSize: "1.25rem", margin: "6px 0" }}>
+        <Typography variant="body1" sx={{ fontSize: "1.25rem", margin: "6px 0", color: "white" }}>
           Your responsibility and actions are appreciated
         </Typography>
-        <Typography variant="body1" sx={{ fontSize: "1.25rem", margin: "6px 0" }}>
+        <Typography variant="body1" sx={{ fontSize: "1.25rem", margin: "6px 0", color: "white" }}>
           We are grateful for your contribution. 🙌
         </Typography>
 
