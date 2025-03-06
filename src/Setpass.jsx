@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify'; // Import toast and ToastContainer
 import 'react-toastify/dist/ReactToastify.css'; // Import the CSS for toast notifications
-import './setpass.css'; // Assuming you have a CSS file for styling
 import background from './reset.jpg';
 import { RiLockPasswordFill } from "react-icons/ri";
+import { Box, Button, TextField, Typography } from '@mui/material';
 
 const SetPass = () => {
   const navigate = useNavigate();
@@ -33,34 +33,93 @@ const SetPass = () => {
   };
 
   return (
-    <div className="setpass-container" style={{ backgroundImage: `url(${background})` }}>
-      <div className="centered-box">
-        <h2>Set New Password<span><RiLockPasswordFill className='icon'/></span></h2>
-        <div className="setpass-form">
-          <input 
-            type="password" 
-            placeholder="Enter New Password" 
-            value={newPassword} 
-            onChange={(e) => setNewPassword(e.target.value)} 
-            required 
+    <Box
+      sx={{
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundImage: `url(${background})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
+        position: 'relative',
+        '::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          background: 'rgba(0, 0, 0, 0.5)',
+        },
+      }}
+    >
+      <Box
+        sx={{
+          width: { xs: '95%', sm: '90%', md: '400px' },
+          padding: { xs: '15px', sm: '20px', md: '25px' },
+          borderRadius: '10px',
+          backgroundColor: 'rgba(255, 255, 255, 0.9)',
+          boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+          position: 'relative',
+          zIndex: 1,
+        }}
+      >
+        <Typography variant="h5" sx={{ textAlign: 'center', color: '#333', fontSize: '1.5rem', mb: 2, position: 'relative' }}>
+          Set New Password
+          <RiLockPasswordFill style={{ position: 'absolute', top: '3px', right: '45px' }} />
+        </Typography>
+
+        <Box component="form" sx={{ display: 'flex', flexDirection: 'column', gap: 2, color: 'black !important' }}>
+          <TextField
+            type="password"
+            label="Enter New Password"
+            variant="outlined"
+            InputProps={{
+              sx: {
+                color: "black !important",
+                height: "50px",
+              },
+            }}
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            fullWidth
+            required
           />
-          <input 
-            type="password" 
-            placeholder="Confirm New Password" 
-            value={confirmPassword} 
-            onChange={(e) => setConfirmPassword(e.target.value)} 
-            required 
+          <TextField
+            type="password"
+            label="Confirm New Password"
+            variant="outlined"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            fullWidth
+            required
           />
-          <button type="button" onClick={handleUpdatePassword}>Update Password</button>
-        </div>
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: '#007bff',
+              color: 'white',
+              padding: '12px',
+              fontSize: '1rem',
+              '&:hover': { backgroundColor: '#0056b3' },
+            }}
+            onClick={handleUpdatePassword}
+          >
+            Update Password
+          </Button>
+        </Box>
+
         {passwordUpdated && (
-          <div className="success-message">
+          <Typography sx={{ textAlign: 'center', mt: 2, color: 'green', fontWeight: 'bold' }}>
             Password updated successfully!
-          </div>
+          </Typography>
         )}
-      </div>
-      <ToastContainer /> {/* Include ToastContainer to display toast notifications */}
-    </div>
+      </Box>
+
+      <ToastContainer />
+    </Box>
   );
 };
 
