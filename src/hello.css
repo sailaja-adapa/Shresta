@@ -60,7 +60,7 @@
 /* Input and Textarea */
 input, textarea {
   width: 100%;
-  color: white !important;
+  color: white;
   background-color: rgba(255, 255, 255, 0);
   border: 1px solid rgba(255, 255, 255, 0.5);
   padding: 14px; 
