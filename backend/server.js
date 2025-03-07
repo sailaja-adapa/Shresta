@@ -28,19 +28,16 @@ const client = twilio(accountSid, authToken);
 
 // Endpoint to send OTP
 app.post('/send-otp', async (req, res) => {
-  const { to, body } = req.body;
-
+  const { to, body } = req.body;i
   if (!to || !body) {
     return res.status(400).json({ success: false, error: 'Missing required fields: "to" and/or "body"' });
   }
-
   try {
     const message = await client.messages.create({
       body: body,
       from: twilioPhoneNumber,
       to: to
     });
-
     res.status(200).json({ success: true, messageSid: message.sid });
   } catch (error) {
     console.error('Error sending OTP:', error);
