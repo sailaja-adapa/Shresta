@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import eye icons
-import './login.css';
 import { db2 } from './firebaseRegistrationConfig';
 import { getDocs, collection, where, query } from 'firebase/firestore';
 import { MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { Box, Button, Typography, TextField, InputAdornment, IconButton } from '@mui/material';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -73,75 +73,171 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-box-wrapper">
-        <div className="login-box">
-          {/* Image Section */}
-          <div className="image-section">
-            <img
-              src="https://media.istockphoto.com/id/1305268276/vector/registration-abstract-concept-vector-illustration.jpg?s=612x612&w=0&k=20&c=nfvUbHjcNDVIPdWkaxGx0z0WZaAEuBK9SyG-aIqg2-0="
-              alt="Registration Illustration"
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '120vh',
+        backgroundImage: 'url(https://img.freepik.com/premium-vector/abstract-background-blue-light-colour-vector-banner-background-design_8499-2007.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        transition: 'background-color 0.3s ease',
+        '&:hover': { backgroundColor: '#e9ecef' }
+      }}
+    >
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: { xs: 'column', md: 'row' },
+          width: '80%',
+          maxWidth: '900px',
+          height: { xs: 'auto', md: '600px' },
+          border: '2px solid #ced6e0',
+          borderRadius: '10px',
+          overflow: 'hidden',
+          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
+          transition: 'transform 0.3s ease',
+          '&:hover': { transform: 'scale(1.03)' }
+        }}
+      >
+        {/* Image Section */}
+        <Box
+          sx={{
+            flex: 1.2,
+            overflow: 'hidden',
+            height: '100%',
+            borderRight: '2px solid #ced6e0'
+          }}
+        >
+          <img
+            src="https://media.istockphoto.com/id/1305268276/vector/registration-abstract-concept-vector-illustration.jpg?s=612x612&w=0&k=20&c=nfvUbHjcNDVIPdWkaxGx0z0WZaAEuBK9SyG-aIqg2-0="
+            alt="Registration Illustration"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              transition: 'transform 0.3s, filter 0.3s',
+            }}
+            onMouseOver={(e) => {
+              e.target.style.transform = 'scale(1.05)';
+              e.target.style.filter = 'brightness(120%)';
+            }}
+            onMouseOut={(e) => {
+              e.target.style.transform = 'scale(1)';
+              e.target.style.filter = 'none';
+            }}
+          />
+        </Box>
+
+        {/* Form Section */}
+        <Box
+          sx={{
+            flex: 1,
+            padding: '2rem',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            backgroundColor: '#fdfdfd',
+            boxShadow: '4px 4px 20px rgba(0, 0, 0, 0.1)',
+            borderRadius: '8px',
+            height: '100%',
+            transition: 'background-color 0.3s ease',
+            '&:hover': { backgroundColor: '#f1f1f1' }
+          }}
+        >
+          <form onSubmit={handleLogin}>
+            <Typography variant="h4" sx={{ textAlign: 'center', color: '#007bff', fontWeight: 'bold', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)' }}>
+              Welcome Back!
+            </Typography>
+
+            {/* Email Input */}
+            <TextField
+              label="Email"
+              type="email"
+              variant="outlined"
+              fullWidth
+              placeholder='Enter Email-Id'
+              required
+              margin="normal"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <MdEmail style={{ color: '#007bff' }} />
+                  </InputAdornment>
+                ),
+              }}
             />
-          </div>
 
-          {/* Form Section */}
-          <div className="form-section">
-            <form className="login-form" onSubmit={handleLogin}>
-              <h2 className="welcome-heading">Welcome Back!</h2>
-              {/* Email Input */}
-              <div className="form-group">
-                <label>Email <span><MdEmail className='icon'/></span> </label>
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
+            {/* Password Input */}
+            <TextField
+              label="Password"
+              type={showPassword ? 'text' : 'password'}
+              variant="outlined"
+              fullWidth
+              placeholder='Enter Password'
+              required
+              margin="normal"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <RiLockPasswordFill style={{ color: '#007bff' }} />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={() => setShowPassword(!showPassword)}>
+                      {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
 
-              {/* Password Input */}
-              <div className="form-group">
-                <label>Password <span><RiLockPasswordFill className='icon'/></span></label>
-                <div className="password-input-container">
-                  <input
-                    type={showPassword ? 'text' : 'password'} // Toggle input type
-                    placeholder="Enter your password"
-                    required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  {/* Eye icon for showing/hiding password */}
-                  <div
-                    className="eye-icon"
-                    onClick={() => setShowPassword(!showPassword)} // Toggle showPassword state
-                  >
-                    {showPassword ? <FaEyeSlash /> : <FaEye />}
-                  </div>
-                </div>
-              </div>
+            {/* Login Button */}
+            <Button
+              type="submit"
+              variant="contained"
+              fullWidth
+              sx={{
+                mt: 2,
+                background: 'linear-gradient(90deg, #007bff, #4b86f6)',
+                color: 'white',
+                padding: '0.75rem',
+                fontSize: '1.1rem',
+                borderRadius: '5px',
+                transition: 'transform 0.2s, box-shadow 0.3s',
+                '&:hover': {
+                  transform: 'translateY(-2px)',
+                  boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+                  background: 'linear-gradient(90deg, #0056b3, #006fe6)',
+                }
+              }}
+              disabled={isLoading}
+            >
+              Login {isLoading && <AiOutlineLoading3Quarters className="loading-animation" />}
+            </Button>
 
-              {/* Login Button */}
-              <button type="submit" className="login-button" disabled={isLoading}>
-                Login {isLoading && <AiOutlineLoading3Quarters className="loading-animation" />}
-              </button>
-
-              {/* Register and Forgot Password Links */}
-              <div className="login-options">
-                Don't have an account?{' '}
-                <span onClick={handleRegister} className="register-link">
-                  Register Here
-                </span>
-                <p className="forgot-password" onClick={handleForgotPassword}>
-                  Forgot Password?
-                </p>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
+            {/* Register & Forgot Password */}
+            <Typography textAlign="center" mt={2}>
+              Don't have an account?{' '}
+              <span style={{ color: 'red', cursor: 'pointer' }} onClick={handleRegister}>
+                Register Here
+              </span>
+            </Typography>
+            <Typography textAlign="center" mt={1} sx={{ color: 'blue', cursor: 'pointer', textDecoration: 'underline' }} onClick={handleForgotPassword}>
+              Forgot Password?
+            </Typography>
+          </form>
+        </Box>
+      </Box>
       <ToastContainer />
-    </div>
+    </Box>
   );
 };
 
