@@ -4,7 +4,7 @@ import { db2 } from './firebaseRegistrationConfig';
 import { addDoc, collection, where, query, getDocs } from 'firebase/firestore';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 import { MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
@@ -141,9 +141,9 @@ export const GeneralDetailsPage = () => {
         </button>
         <p className='text-center'>
           Already have an account?{' '}
-          <span className="login-link">
+          <Link to={'/login'} className="login-link">
             Login
-          </span>
+          </Link>
         </p>
       </form>
     </div>

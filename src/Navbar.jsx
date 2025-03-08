@@ -60,25 +60,35 @@ const Navbar = () => {
       </div>
 
       <ul className={`nav-links ${isOpen ? 'active' : ''} ${isOpen ? 'dropdown' : ''}`} style={isOpen ? navStyle : {}}>
-        <li className="center-align">
-          <FaHome className="nav-icon" />
-          <Link to="/">Home</Link>
+        <li>
+          <Link to="/">
+            <FaHome className="nav-icon" />
+            <span>Home</span>
+          </Link>
         </li>
-        <li className="center-align">
-          <FaInfoCircle className="nav-icon" />
-          <Link to="/aboutus">About Us</Link>
+        <li>
+          <Link to="/aboutus">
+            <FaInfoCircle className="nav-icon" />
+            <span>About Us</span>
+          </Link>
         </li>
-        <li className="center-align">
-          <FaPhone className="nav-icon" />
-          <Link to="/contact">Contact Us</Link>
+        <li>
+          <Link to="/contact">
+            <FaPhone className="nav-icon" />
+            <span>Contact Us</span>
+          </Link>
         </li>
-        <li className="center-align">
-          <FaSignInAlt className="nav-icon" />
-          <Link to="/login">Login</Link>
+        <li>
+          <Link to="/login">
+            <FaSignInAlt className="nav-icon" />
+            <span>Login</span>
+          </Link>
         </li>
-        <li className="center-align">
-          <FaUserPlus className="nav-icon" />
-          <Link to="/register">Register</Link>
+        <li>
+          <Link to="/register">
+            <FaUserPlus className="nav-icon" />
+            <span>Register</span>
+          </Link>
         </li>
       </ul>
     </nav>
