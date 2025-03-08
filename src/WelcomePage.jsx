@@ -141,9 +141,12 @@ const WelcomeComponent = () => {
           value={wardNo}
           InputProps={{
             sx: {
-              color: "white !important",
+              color: "black !important",
               height: "50px",
             },
+          }}
+          InputLabelProps={{
+            sx: { color: "black !important" }, // Ensures label is fully black
           }}
           onChange={(e) => setWardNo(e.target.value)}
           sx={{ mb: 2 }}
@@ -156,9 +159,12 @@ const WelcomeComponent = () => {
           value={selectedLocation}
           InputProps={{
             sx: {
-              color: "white !important",
+              color: "black !important",
               height: "50px",
             },
+          }}
+          InputLabelProps={{
+            sx: { color: "black !important" }, // Ensures label is fully black
           }}
           onChange={(e) => setSelectedLocation(e.target.value)}
           sx={{ mb: 2 }}
@@ -170,9 +176,12 @@ const WelcomeComponent = () => {
           fullWidth
           InputProps={{
             sx: {
-              color: "white !important",
+              color: "black !important",
               height: "50px",
             },
+          }}
+          InputLabelProps={{
+            sx: { color: "black !important" }, // Ensures label is fully black
           }}
           value={pincode}
           onChange={(e) => setPincode(e.target.value)}
@@ -187,7 +196,7 @@ const WelcomeComponent = () => {
           sx={{
             mb: 2,
             '& .MuiSelect-select': {
-              color: 'white !important' // Black for selected, gray for placeholder
+              color: 'black !important' // Black for selected, gray for placeholder
             },
           }}
         >
@@ -205,8 +214,11 @@ const WelcomeComponent = () => {
             multiline
             InputProps={{
               sx: {
-                color: "white !important",
+                color: "black !important",
               },
+            }}
+            InputLabelProps={{
+              sx: { color: "black !important" }, // Ensures label is fully black
             }}
             rows={4}
             value={address}
@@ -231,9 +243,12 @@ const WelcomeComponent = () => {
           fullWidth
           InputProps={{
             sx: {
-              color: "white !important",
+              color: "black !important",
               height: "50px",
             },
+          }}
+          InputLabelProps={{
+            sx: { color: "black !important" }, // Ensures label is fully black
           }}
           value={phonenumber}
           onChange={(e) => setPhonenumber(e.target.value)}
