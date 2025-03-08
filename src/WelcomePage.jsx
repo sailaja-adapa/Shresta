@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import './welcomepage.css';
+// import './welcomepage.css';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import GetCurrentAddress from './GetCurrentAddress';
 import { FaHome } from "react-icons/fa";
 import { FaMapMarkerAlt } from "react-icons/fa";
+import { 
+  Box, Typography, TextField, Select, MenuItem, Checkbox, Button, FormControlLabel, CircularProgress 
+} from '@mui/material';
 
 
 const WelcomeComponent = () => {
@@ -93,7 +96,6 @@ const WelcomeComponent = () => {
   };
 
   const statesList = [
-    state, 
     'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Goa', 'Gujarat', 'Haryana',
     'Himachal Pradesh', 'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur',
     'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana',
@@ -101,75 +103,162 @@ const WelcomeComponent = () => {
   ];
 
   return (
-    <div className="welcome-page">
+    <Box
+      sx={{
+        minHeight: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundImage: 'url(https://static.vecteezy.com/system/resources/thumbnails/025/055/170/large/smartphone-app-map-with-location-icon-and-route-web-animation-of-navigation-in-a-big-city-app-screen-of-traveling-city-map-background-localization-gps-travel-and-navigation-concept-video.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        color: '#100201',
+      }}
+    >
       <ToastContainer />
-      <div className="content-box">
-        <h1>Welcome to Shreshta</h1>
+      <Box
+        sx={{
+          backgroundColor: 'rgba(30, 163, 245, 0.8)',
+          padding: '30px',
+          borderRadius: '10px',
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+          width: '100%',
+          maxWidth: '500px',
+          boxSizing: 'border-box',
+          mt: 5,
+        }}
+      >
+        <Typography variant="h4" align="center" gutterBottom>
+          Welcome to Shreshta
+        </Typography>
 
-        {/* Pass the fetchAddressNow prop to GetCurrentAddress */}
         <GetCurrentAddress fetchAddressNow={fetchAddressNow} onAddressFetched={handleAddressFetched} />
 
-        <div className="ward-selection">
-          <label htmlFor="wardNo">Select Ward No (Optional):</label>
-          <input type="text" id="wardNo" value={wardNo} onChange={handleWardNoChange} />
-        </div>
+        <TextField
+          label="Ward No (Optional)"
+          variant="outlined"
+          fullWidth
+          value={wardNo}
+          InputProps={{
+            sx: {
+              color: "white !important",
+              height: "50px",
+            },
+          }}
+          onChange={(e) => setWardNo(e.target.value)}
+          sx={{ mb: 2 }}
+        />
 
-        <div className="location-selection">
-          <label htmlFor="location">Select Location:</label>
-          <input type="text" id="location" value={selectedLocation} onChange={handleLocationChange} />
-        </div>
+        <TextField
+          label="Location"
+          variant="outlined"
+          fullWidth
+          value={selectedLocation}
+          InputProps={{
+            sx: {
+              color: "white !important",
+              height: "50px",
+            },
+          }}
+          onChange={(e) => setSelectedLocation(e.target.value)}
+          sx={{ mb: 2 }}
+        />
 
-        <div className="pincode">
-          <label htmlFor="pincode">Enter Pincode:</label>
-          <input type="text" id="pincode" value={pincode} onChange={handlePincodeChange} />
-        </div>
+        <TextField
+          label="Pincode"
+          variant="outlined"
+          fullWidth
+          InputProps={{
+            sx: {
+              color: "white !important",
+              height: "50px",
+            },
+          }}
+          value={pincode}
+          onChange={(e) => setPincode(e.target.value)}
+          sx={{ mb: 2 }}
+        />
 
-        <div className="state-selection">
-          <label htmlFor="state">Select State:</label>
-          <select id="state" value={state} onChange={handleStateChange}>
-            {statesList.map((stateOption, index) => (
-              <option key={index} value={stateOption}>{stateOption}</option>
-            ))}
-          </select>
-        </div>
+        <Select
+          value={ state }
+          onChange={(e) => setState(e.target.value)}
+          displayEmpty
+          fullWidth
+          sx={{
+            mb: 2,
+            '& .MuiSelect-select': {
+              color: 'white !important' // Black for selected, gray for placeholder
+            },
+          }}
+        >
+          <MenuItem value="" disabled>Select State</MenuItem> {/* Acts as the placeholder */}
+          {statesList.map((stateOption, index) => (
+            <MenuItem key={index} value={stateOption}>{stateOption}</MenuItem>
+          ))}
+        </Select>
 
-        <div className="address-container">
-          <div className="address">
-            <label htmlFor="address">Enter Address:</label>
-            <textarea id="address" value={address} onChange={handleAddressChange}></textarea>
-          </div>
-
-          {/* Location Icon */}
-          <div onClick={handleHomeClick}>
-            <FaMapMarkerAlt size={30} className="location-icon"/>
-          </div>
-        </div>
-
-
-        <div className="phonenumber">
-          <label htmlFor="phonenumber">Enter Phone Number:</label>
-          <input type="text" id="phonenumber" value={phonenumber} onChange={handlePhonenumberChange} />
-        </div>
-
-        <div className="flex">
-          <input
-            type="checkbox"
-            id="robotCheck"
-            checked={isNotARobot}
-            onChange={handleCheckboxChange}
+        <Box sx={{ position: 'relative', mb: 2 }}>
+          <TextField
+            label="Address"
+            variant="outlined"
+            fullWidth
+            multiline
+            InputProps={{
+              sx: {
+                color: "white !important",
+              },
+            }}
+            rows={4}
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
           />
-          <label htmlFor="robotCheck">I am not a robot</label>
-        </div>
+          <FaMapMarkerAlt
+            size={30}
+            style={{
+              position: 'absolute',
+              right: '10px',
+              bottom: '10px',
+              cursor: 'pointer',
+              color: 'red',
+            }}
+            onClick={handleHomeClick}
+          />
+        </Box>
 
-        <button
-          className="next-button"
+        <TextField
+          label="Phone Number"
+          variant="outlined"
+          fullWidth
+          InputProps={{
+            sx: {
+              color: "white !important",
+              height: "50px",
+            },
+          }}
+          value={phonenumber}
+          onChange={(e) => setPhonenumber(e.target.value)}
+          sx={{ mb: 2 }}
+        />
+
+        <FormControlLabel
+          control={
+            <Checkbox checked={isNotARobot} onChange={() => setIsNotARobot(!isNotARobot)} />
+          }
+          label="I am not a robot"
+        />
+
+        <Button
+          variant="contained"
+          fullWidth
+          color="success"
           onClick={handleNextClick}
           disabled={loadingOTP}
+          sx={{ mt: 2 }}
         >
-          {loadingOTP ? 'Sending OTP...' : 'Next'}
-        </button>
-      </div>
-    </div>
+          {loadingOTP ? <CircularProgress size={24} /> : 'Next'}
+        </Button>
+      </Box>
+    </Box>
   );
 };
 
