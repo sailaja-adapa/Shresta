@@ -165,11 +165,26 @@
   color: white;
   font-size: 1.1rem;
   border-radius: 5px;
-  cursor: pointer;
   transition: transform 0.2s, box-shadow 0.3s, background 0.3s ease;
   align-self: center; /* Center align the button */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
 }
 
+.loading-animation {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
 /* Form Styling */
 .login-form {
