@@ -1,3 +1,4 @@
+import { convertLength } from "@mui/material/styles/cssUtils";
 import React, { useEffect, useState } from "react";
 
 const GetCurrentAddress = ({ fetchAddressNow, onAddressFetched }) => {
@@ -40,7 +41,7 @@ const GetCurrentAddress = ({ fetchAddressNow, onAddressFetched }) => {
                             getLocation();
                         } else {
                             console.warn("Location accuracy is too low");
-                            onAddressFetched("Location accuracy is too low. Move to an open area.");
+                            onAddressFetched("Move to an open area.");
                         }
                     }
                 },
@@ -53,7 +54,7 @@ const GetCurrentAddress = ({ fetchAddressNow, onAddressFetched }) => {
                     } else if (error.code === error.POSITION_UNAVAILABLE) {
                         errorMessage = "Location data is unavailable. Try again later.";
                     } else if (error.code === error.TIMEOUT) {
-                        errorMessage = "Location request timed out. Move to an open area.";
+                        errorMessage = "Move to an open area.";
                     }
                     
                     onAddressFetched(errorMessage);

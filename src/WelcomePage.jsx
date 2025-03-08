@@ -9,6 +9,7 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 import { 
   Box, Typography, TextField, Select, MenuItem, Checkbox, Button, FormControlLabel, CircularProgress 
 } from '@mui/material';
+import { convertLength } from '@mui/material/styles/cssUtils';
 
 
 const WelcomeComponent = () => {
@@ -17,6 +18,7 @@ const WelcomeComponent = () => {
   const [pincode, setPincode] = useState('');
   const [state, setState] = useState('');
   const [address, setAddress] = useState('');
+  const [isAddressManuallyEdited, setIsAddressManuallyEdited] = useState(false);
   const [phonenumber, setPhonenumber] = useState('');
   const [isNotARobot, setIsNotARobot] = useState(false);
   const [loadingOTP, setLoadingOTP] = useState(false);
@@ -28,10 +30,13 @@ const WelcomeComponent = () => {
   const handleHomeClick = () => {
     setIsAddressFetched(false);  // Reset isAddressFetched before triggering address fetch
     setFetchAddressNow(true);    // Trigger address fetching when home icon is clicked
+    setIsAddressManuallyEdited(false);
   };
 
   const handleAddressFetched = (fetchedAddress) => {
-    setAddress(fetchedAddress);
+    if (!isAddressManuallyEdited) { // Only update if user hasn't manually edited
+      setAddress(fetchedAddress);
+    }
     const addressParts = fetchedAddress.split(',');
     if (addressParts.length >= 4) {
       setWardNo(addressParts[1]?.trim() || '');
@@ -48,7 +53,10 @@ const WelcomeComponent = () => {
   const handlePincodeChange = (e) => setPincode(e.target.value);
   const handlePhonenumberChange = (e) => setPhonenumber(e.target.value);
   const handleStateChange = (e) => setState(e.target.value);
-  const handleAddressChange = (e) => setAddress(e.target.value);
+  const handleAddressChange = (e) => {
+    setAddress(e.target.value);
+    setIsAddressManuallyEdited(true);
+  };
   const handleCheckboxChange = () => setIsNotARobot(!isNotARobot);
 
   const generateOTP = () => Math.floor(100000 + Math.random() * 900000);
@@ -207,34 +215,29 @@ const WelcomeComponent = () => {
         </Select>
 
         <Box sx={{ position: 'relative', mb: 2 }}>
-          <TextField
-            label="Address"
-            variant="outlined"
-            fullWidth
-            multiline
-            InputProps={{
-              sx: {
-                color: "black !important",
-              },
-            }}
-            InputLabelProps={{
-              sx: { color: "black !important" }, // Ensures label is fully black
-            }}
-            rows={4}
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-          />
-          <FaMapMarkerAlt
-            size={30}
-            style={{
-              position: 'absolute',
-              right: '10px',
-              bottom: '10px',
-              cursor: 'pointer',
-              color: 'red',
-            }}
-            onClick={handleHomeClick}
-          />
+        <TextField
+          label="Address"
+          variant="outlined"
+          fullWidth
+          multiline
+          rows={4}
+          InputProps={{ sx: { color: "black !important" } }}
+          InputLabelProps={{ sx: { color: "black !important" } }}
+          value={address}
+          onChange={handleAddressChange} // Now tracks manual input
+          sx={{ mb: 2 }}
+        />
+        <FaMapMarkerAlt
+          size={30}
+          style={{
+            position: 'absolute',
+            right: '10px',
+            bottom: '20px',
+            cursor: 'pointer',
+            color: 'red',
+          }}
+          onClick={handleHomeClick}
+        />
         </Box>
 
         <TextField
