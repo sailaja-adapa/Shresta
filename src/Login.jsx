@@ -8,12 +8,14 @@ import { db2 } from './firebaseRegistrationConfig';
 import { getDocs, collection, where, query } from 'firebase/firestore';
 import { MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleForgotPassword = () => {
     navigate('/forgotpassword');
@@ -23,19 +25,24 @@ const Login = () => {
     navigate('/register');
   };
 
-  const handleLogin = async () => {
-    const dbref = collection(db2, 'Auth');
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    setIsLoading(true);
+
+    if (!password.trim()) {
+      toast.error('Password is required', {
+        position: 'top-center'
+      });
+      return;
+    }
+    
+    const dbRef = collection(db2, 'Auth');
     try {
-      const emailQuery = query(dbref, where('Email', '==', email));
-      const passwordQuery = query(dbref, where('Password', '==', password));
+      const userQuery = query(dbRef, where('Email', '==', email), where('Password', '==', password));
+      const userSnapshot = await getDocs(userQuery);
 
-      const emailSnapshot = await getDocs(emailQuery);
-      const passwordSnapshot = await getDocs(passwordQuery);
-
-      const emailArray = emailSnapshot.docs.map((doc) => doc.data());
-      const passwordArray = passwordSnapshot.docs.map((doc) => doc.data());
-
-      if (emailArray.length > 0 && passwordArray.length > 0) {
+      if (!userSnapshot.empty) {
         if (email.endsWith('@svecw.edu.in')) {
           toast.success('Login successful! Redirecting to Dashboard 😊🎉', {
             position: 'top-center',
@@ -61,6 +68,8 @@ const Login = () => {
         position: 'top-center',
       });
     }
+
+    setIsLoading(false);
   };
 
   return (
@@ -77,13 +86,7 @@ const Login = () => {
 
           {/* Form Section */}
           <div className="form-section">
-            <form
-              className="login-form"
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleLogin();
-              }}
-            >
+            <form className="login-form" onSubmit={handleLogin}>
               <h2 className="welcome-heading">Welcome Back!</h2>
               {/* Email Input */}
               <div className="form-group">
@@ -119,7 +122,9 @@ const Login = () => {
               </div>
 
               {/* Login Button */}
-              <button type="submit">Login</button>
+              <button type="submit" className="login-button" disabled={isLoading}>
+                Login {isLoading && <AiOutlineLoading3Quarters className="loading-animation" />}
+              </button>
 
               {/* Register and Forgot Password Links */}
               <div className="login-options">
