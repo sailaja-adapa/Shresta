@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import firebase from "./firebase"; // Import Firebase initialization
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 import { 
   Box, 
   Card, 
@@ -13,7 +14,7 @@ import {
 import background from "./forgot.jpg";
 import image from "./forpas.jpg";
 
-const Forpas = () => {
+const ForgotPassword = () => {
   const [username, setUsername] = useState('');
   const [phone, setPhone] = useState('');
   const navigate = useNavigate();
@@ -27,7 +28,21 @@ const Forpas = () => {
   };
 
   const handleSendOtp = () => {
-    const phoneNumber = "+91" + phone;
+    if (!username.trim()) {
+      toast.error('Username is required', {
+        position: 'top-center'
+      })
+      return
+    }
+
+    const trimmedPhone = phone.trim();
+    
+    if (!/^\d{10}$/.test(trimmedPhone)) {
+      toast.error('Enter a valid phone number')
+      return
+    }
+
+    const phoneNumber = `+91${trimmedPhone}`;
     const appVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', {
       'size': 'invisible',
       'callback': (response) => {
@@ -42,10 +57,11 @@ const Forpas = () => {
       .then((confirmationResult) => {
         // Store verification ID locally
         localStorage.setItem('verificationId', confirmationResult.verificationId);
-        console.log("OTP has been sent");
+        toast.success("OTP has been sent");
         navigate('/pass'); // Navigate to Pass.jsx
       })
       .catch((error) => {
+        toast.error("Error Sending OTP");
         console.log("Error sending OTP:", error);
       });
   };
@@ -202,8 +218,9 @@ const Forpas = () => {
       </Card>
 
       <div id="sign-in-button"></div> {/* RecaptchaVerifier container */}
+      <ToastContainer position="top-center" />
     </Box>
   );
 };
 
-export default Forpas;
+export default ForgotPassword;
