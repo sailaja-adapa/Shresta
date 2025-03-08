@@ -1,97 +1,73 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { FaHome, FaInfoCircle, FaPhone, FaSignInAlt, FaUserPlus } from "react-icons/fa";
-import "./Navbar.css";
+import { Box, AppBar, Toolbar, IconButton, Typography, Menu, MenuItem } from "@mui/material";
+import { FaHome, FaInfoCircle, FaPhone, FaSignInAlt, FaUserPlus, FaBars } from "react-icons/fa";
 
 const Navbar = () => {
   const location = useLocation();
   const [navStyle, setNavStyle] = useState({});
-  const [isOpen, setIsOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   useEffect(() => {
-    switch (location.pathname) {
-      case '/':
-        setNavStyle({
-          background: 'rgba(24, 180, 126, 0.35)',  // Dark blue for home
-          backdropFilter: 'blur(8px)'
-        });
-        break;
-      case '/aboutus':
-        setNavStyle({
-          background: 'rgba(45, 55, 72, 0.35)',  // Slate blue
-          backdropFilter: 'blur(8px)'
-        });
-        break;
-      case '/contact':
-        setNavStyle({
-          background: 'rgba(44, 82, 130, 0.35)',  // Medium blue
-          backdropFilter: 'blur(8px)'
-        });
-        break;
-      case '/StoreImageTextFirebase':
-        setNavStyle({
-          background: 'rgba(4, 95, 206, 0.55)',  // Medium blue
-          backdropFilter: 'blur(8px)'
-        });
-        break;
-      default:
-        setNavStyle({
-          background: 'rgba(30, 41, 59, 0.35)',  // Navy blue
-          backdropFilter: 'blur(8px)'
-        });
-    }
+    const styles = {
+      "/": { background: "rgba(24, 180, 126, 0.35)", backdropFilter: "blur(8px)" },
+      "/aboutus": { background: "rgba(45, 55, 72, 0.35)", backdropFilter: "blur(8px)" },
+      "/contact": { background: "rgba(44, 82, 130, 0.35)", backdropFilter: "blur(8px)" },
+      "/StoreImageTextFirebase": { background: "rgba(4, 95, 206, 0.55)", backdropFilter: "blur(8px)" },
+      default: { background: "rgba(30, 41, 59, 0.35)", backdropFilter: "blur(8px)" },
+    };
+    setNavStyle(styles[location.pathname] || styles.default);
   }, [location]);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+  
+  const handleMenuOpen = (event) => setAnchorEl(event.currentTarget);
+  const handleMenuClose = () => setAnchorEl(null);
 
   return (
-    <nav className="navbar" style={navStyle}>
-      <div className="navbar-brand">
-        <Link to="/" className="navbar-logo">
+    <AppBar position="fixed" sx={{ ...navStyle, transition: "background-color 0.3s ease", boxShadow: "none", padding: "0.5rem 2rem" }}>
+      <Toolbar sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        {/* Logo */}
+        <Typography component={Link} to="/" sx={{ color: "white", fontSize: "1.5rem", fontWeight: "bold", textDecoration: "none" }}>
           Shresta
-        </Link>
-        <button className="hamburger" onClick={toggleMenu}>
-          <span className={`hamburger-line ${isOpen ? 'open' : ''}`}></span>
-          <span className={`hamburger-line ${isOpen ? 'open' : ''}`}></span>
-          <span className={`hamburger-line ${isOpen ? 'open' : ''}`}></span>
-        </button>
-      </div>
+        </Typography>
 
-      <ul className={`nav-links ${isOpen ? 'active' : ''} ${isOpen ? 'dropdown' : ''}`} style={isOpen ? navStyle : {}}>
-        <li>
-          <Link to="/">
-            <FaHome className="nav-icon" />
-            <span>Home</span>
-          </Link>
-        </li>
-        <li>
-          <Link to="/aboutus">
-            <FaInfoCircle className="nav-icon" />
-            <span>About Us</span>
-          </Link>
-        </li>
-        <li>
-          <Link to="/contact">
-            <FaPhone className="nav-icon" />
-            <span>Contact Us</span>
-          </Link>
-        </li>
-        <li>
-          <Link to="/login">
-            <FaSignInAlt className="nav-icon" />
-            <span>Login</span>
-          </Link>
-        </li>
-        <li>
-          <Link to="/register">
-            <FaUserPlus className="nav-icon" />
-            <span>Register</span>
-          </Link>
-        </li>
-      </ul>
-    </nav>
+        {/* Desktop Navigation */}
+        <Box sx={{ display: { xs: "none", md: "flex" }, gap: "2rem", alignItems: "center" }}>
+          {[
+            { to: "/", icon: <FaHome />, label: "Home" },
+            { to: "/aboutus", icon: <FaInfoCircle />, label: "About Us" },
+            { to: "/contact", icon: <FaPhone />, label: "Contact Us" },
+            { to: "/login", icon: <FaSignInAlt />, label: "Login" },
+            { to: "/register", icon: <FaUserPlus />, label: "Register" },
+          ].map(({ to, icon, label }) => (
+            <Box key={to} component={Link} to={to} sx={{ display: "flex", alignItems: "center", color: "black", textDecoration: "none", gap: "0.5rem", fontSize: "1rem", transition: "color 0.3s ease", "&:hover": { color: "white" } }}>
+              {icon}
+              {label}
+            </Box>
+          ))}
+        </Box>
+
+        {/* Mobile Menu Icon */}
+        <IconButton sx={{ display: { xs: "block", md: "none" }, color: "white" }} onClick={handleMenuOpen}>
+          <FaBars />
+        </IconButton>
+
+        {/* Mobile Menu */}
+        <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose} sx={{ "& .MuiPaper-root": { background: "rgba(35, 132, 244, 0.7)", backdropFilter: "blur(20px)", padding: "0.5rem", borderRadius: "8px", boxShadow: "0 4px 30px rgba(0, 0, 0, 0.8)" } }}>
+          {[
+            { to: "/", icon: <FaHome />, label: "Home" },
+            { to: "/aboutus", icon: <FaInfoCircle />, label: "About Us" },
+            { to: "/contact", icon: <FaPhone />, label: "Contact Us" },
+            { to: "/login", icon: <FaSignInAlt />, label: "Login" },
+            { to: "/register", icon: <FaUserPlus />, label: "Register" },
+          ].map(({ to, icon, label }) => (
+            <MenuItem key={to} component={Link} to={to} onClick={handleMenuClose} sx={{ display: "flex", alignItems: "center", gap: "0.5rem", color: "black", "&:hover": { color: "white" } }}>
+              {icon}
+              {label}
+            </MenuItem>
+          ))}
+        </Menu>
+      </Toolbar>
+    </AppBar>
   );
 };
 
