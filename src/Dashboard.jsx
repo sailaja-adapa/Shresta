@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Card, CardContent, Typography, Button } from "@mui/material";
 import { FaArrowRightLong } from "react-icons/fa6";
-import "./Dashboard.css";
 
 const Dashboard = () => {
   const navigate = useNavigate();
