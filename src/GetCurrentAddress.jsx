@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import { convertLength } from "@mui/material/styles/cssUtils";
+import React, { useEffect, useState } from "react";
 
 const GetCurrentAddress = ({ fetchAddressNow, onAddressFetched }) => {
+    const [attempt, setAttempt] = useState(0); // Track retry attempts
     useEffect(() => {
-        if (!fetchAddressNow) return; // Only fetch address when `fetchAddressNow` is true
-
+        if (!fetchAddressNow) return; // Only fetch address when triggered
         const fetchAddress = async (latitude, longitude) => {
             const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&addressdetails=1&accept-language=en`;
             try {
@@ -20,33 +21,50 @@ const GetCurrentAddress = ({ fetchAddressNow, onAddressFetched }) => {
                 onAddressFetched(formattedAddress);
             } catch (error) {
                 console.error("Error fetching address:", error);
-                onAddressFetched("Error fetching address");
+                onAddressFetched("Error fetching address. Try again.");
             }
         };
+        const getLocation = () => {
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    const { latitude, longitude, accuracy } = pos.coords;
+                    console.log(`Location Accuracy: ${accuracy} meters`);
+                    
+                    if (accuracy < 100) { // Allow up to 100 meters
+                        fetchAddress(latitude, longitude);
+                    } else {
+                        if (attempt < 1) { // Retry once before failing
+                            setAttempt(attempt + 1);
+                            getLocation();
+                        } else {
+                            console.warn("Location accuracy is too low");
+                            onAddressFetched("Move to an open area.");
+                        }
+                    }
+                },
+                (error) => {
+                    console.error("Error obtaining location:", error);
+                    let errorMessage = "Error obtaining location. Try again.";
+                    
+                    if (error.code === error.PERMISSION_DENIED) {
+                        errorMessage = "Location access denied. Please enable GPS permissions.";
+                    } else if (error.code === error.POSITION_UNAVAILABLE) {
+                        errorMessage = "Location data is unavailable. Try again later.";
+                    } else if (error.code === error.TIMEOUT) {
+                        errorMessage = "Move to an open area.";
+                    }
 
-        navigator.geolocation.getCurrentPosition(
-            (pos) => {
-                const { latitude, longitude, accuracy } = pos.coords;
-                if (accuracy < 50) { // Better accuracy threshold
-                    fetchAddress(latitude, longitude);
-                } else {
-                    console.warn("Location accuracy is too low");
-                    onAddressFetched("Location accuracy is too low. Please move to an open area.");
+                    onAddressFetched(errorMessage);
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 15000, // 15 seconds timeout
+                    maximumAge: 3000 // Less cache, but not too frequent requests
                 }
-            },
-            (error) => {
-                console.error("Error obtaining location:", error);
-                onAddressFetched("Error obtaining location");
-            },
-            {
-                enableHighAccuracy: true,
-                timeout: 20000, // Increased timeout
-                maximumAge: 5000 // Reduced maximumAge to ensure fresh data
-            }
-        );
-    }, [fetchAddressNow, onAddressFetched]); // Dependency on fetchAddressNow
-
+            );
+        };
+        getLocation(); // Start fetching location
+    }, [fetchAddressNow, onAddressFetched, attempt]); // Dependency on fetchAddressNow & retry attempt
     return null;
 };
-
 export default GetCurrentAddress;
