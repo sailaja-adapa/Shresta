@@ -163,7 +163,7 @@
   .nav-links.active {
     display: flex;
   }
-
+cd
   .nav-links.dropdown {
     background-color: inherit; /* Inherit the dynamic background color */
     backdrop-filter: inherit; /* Inherit the dynamic backdrop filter */
