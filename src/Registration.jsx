@@ -6,7 +6,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 import { MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaEye, FaEyeSlash, FaUser  } from 'react-icons/fa';
+import { FaPhone, FaMapLocation } from "react-icons/fa6";
+import { TbGenderBigender } from "react-icons/tb";
 import { Box, Paper, TextField, Button, Typography, FormControl, IconButton, InputAdornment, Container } from "@mui/material";
 import { Select, MenuItem, InputLabel, Grid } from "@mui/material";
 import image from '../src/register.jpg';
@@ -147,7 +149,22 @@ export const GeneralDetailsPage = () => {
         </Box>
 
         {/* Username */}
-        <TextField fullWidth variant="outlined" label="Username" value={username} onChange={(e) => setUsername(e.target.value)} required sx={{ marginTop: "1rem" }} />
+        <TextField 
+          fullWidth 
+          variant="outlined" 
+          label="Username" 
+          value={username} 
+          onChange={(e) => setUsername(e.target.value)} 
+          required 
+          sx={{ marginTop: "1rem" }}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <FaUser style={{ color: "#007bff", fontSize: "1.3rem" }} />
+              </InputAdornment>
+            ),
+          }}
+        />
 
         {/* Email with Icon */}
         <TextField
@@ -332,6 +349,13 @@ export const AdditionalDetailsPage = () => {
           onChange={(e) => setPhoneNumber(e.target.value)}
           required
           sx={{ marginBottom: "1rem" }}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <FaPhone style={{ color: "#007bff", fontSize: "1.3rem" }} />
+              </InputAdornment>
+            ),
+          }}
         />
 
         {/* Adhar Number */}
@@ -370,7 +394,19 @@ export const AdditionalDetailsPage = () => {
             </FormControl>
           </Grid>
           <Grid item xs={12} md={6}>
-            <TextField fullWidth label="Country" variant="outlined" value={country} onChange={(e) => setCountry(e.target.value)} required />
+            <TextField 
+              fullWidth label="Country" 
+              variant="outlined" 
+              value={country} 
+              onChange={(e) => setCountry(e.target.value)} 
+              required 
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <FaMapLocation style={{ color: "#007bff", fontSize: "1.3rem" }} />
+                  </InputAdornment>
+                ),
+              }}/>
           </Grid>
         </Grid>
 
