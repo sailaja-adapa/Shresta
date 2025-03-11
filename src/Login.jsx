@@ -24,6 +24,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+
     if (!password.trim()) {
       toast.error('Password is required', { position: 'top-center' });
       setIsLoading(false);
@@ -34,9 +35,19 @@ const Login = () => {
     try {
       const userQuery = query(dbRef, where('Email', '==', email), where('Password', '==', password));
       const userSnapshot = await getDocs(userQuery);
+
       if (!userSnapshot.empty) {
         toast.success('Login successful! Redirecting...', { position: 'top-center' });
-        setTimeout(() => navigate('/dashboard'), 2000);
+
+        setTimeout(() => {
+          if (email.endsWith('@gmail.com')) {
+            navigate('/WelcomePage');
+          } else if (email.endsWith('@svecw.edu.in')) {
+            navigate('/dashboard');
+          } else {
+            navigate('/dashboard');
+          }
+        }, 2000);
       } else {
         toast.error('Check your Credentials ❌', { position: 'top-center' });
       }
@@ -58,16 +69,15 @@ const Login = () => {
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         padding: '20px',
-        paddingTop: '80px', // <-- Added space below navbar to prevent overlap
+        paddingTop: '80px',
       }}
     >
       <motion.div
-  initial={{ y: '100vh', opacity: 0 }} // Start from bottom
-  animate={{ y: 0, opacity: 1 }} // Move to original position
-  transition={{ duration: 1.2, ease: 'easeOut' }} // <-- Increased duration to 1.2s for a slower effect
-  style={{ width: '100%', maxWidth: '900px' }}
->
-
+        initial={{ y: '100vh', opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 1.2, ease: 'easeOut' }}
+        style={{ width: '100%', maxWidth: '900px' }}
+      >
         <Box
           sx={{
             display: 'flex',
@@ -89,7 +99,7 @@ const Login = () => {
               flex: 1.2,
               overflow: 'hidden',
               height: '100%',
-              borderRight: '2px solid #ced6e0'
+              borderRight: '2px solid #ced6e0',
             }}
           >
             <img
@@ -122,10 +132,7 @@ const Login = () => {
               gap: 4,
             }}
           >
-            <form 
-              onSubmit={handleLogin}
-              style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }} 
-            >
+            <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <Typography
                 variant="h4"
                 sx={{
@@ -163,6 +170,7 @@ const Login = () => {
               <TextField
                 label="Password"
                 placeholder="Enter Password"
+                type={showPassword ? 'text' : 'password'}
                 fullWidth
                 required
                 margin="normal"
@@ -202,14 +210,20 @@ const Login = () => {
               </Button>
 
               <Typography textAlign="center" mt={2}>
-              Don't have an account?{' '}
-              <span style={{ color: 'red', cursor: 'pointer' }} onClick={handleRegister}>
-                Register Here
-              </span>
-            </Typography>
-            <Typography textAlign="center" mt={1} sx={{ color: 'blue', cursor: 'pointer', textDecoration: 'underline' }} onClick={handleForgotPassword}>
-              Forgot Password?
-            </Typography>
+                Don't have an account?{' '}
+                <span style={{ color: 'red', cursor: 'pointer' }} onClick={handleRegister}>
+                  Register Here
+                </span>
+              </Typography>
+
+              <Typography
+                textAlign="center"
+                mt={1}
+                sx={{ color: 'blue', cursor: 'pointer', textDecoration: 'underline' }}
+                onClick={handleForgotPassword}
+              >
+                Forgot Password?
+              </Typography>
             </form>
           </Box>
         </Box>
