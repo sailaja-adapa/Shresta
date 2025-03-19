@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
@@ -79,7 +80,6 @@ const WelcomeComponent = () => {
       toast.error("Phone number not verified. Please verify before proceeding.");
       return;
     }
-  
     const phoneNumber = `+91${phonenumber}`;
     const otp = Math.floor(100000 + Math.random() * 900000); // Generate OTP
     setLoadingOTP(true);
