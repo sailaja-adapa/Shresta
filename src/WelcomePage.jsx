@@ -59,42 +59,57 @@ const WelcomeComponent = () => {
 
   const generateOTP = () => Math.floor(100000 + Math.random() * 900000);
   const handleNextClick = async () => {
-    if (wardNo && selectedLocation && pincode && state && address && phonenumber && isNotARobot) {
-      const isPhoneVerified = localStorage.getItem('otp') ? true : false;
-      if (!isPhoneVerified) {
-        toast.error("Please verify your phone number before proceeding.");
-        return;
+    // Check if all required fields are filled
+    if (
+      !wardNo ||
+      !selectedLocation ||
+      !pincode ||
+      !state ||
+      !address ||
+      !phonenumber ||
+      !isNotARobot
+    ) {
+      toast.error("Please fill in all required fields before proceeding.");
+      return;
+    }
+  
+    // Check if the phone number is verified
+    const storedOTP = localStorage.getItem('otp');
+    if (!storedOTP) {
+      toast.error("Phone number not verified. Please verify before proceeding.");
+      return;
+    }
+  
+    const phoneNumber = `+91${phonenumber}`;
+    const otp = Math.floor(100000 + Math.random() * 900000); // Generate OTP
+    setLoadingOTP(true);
+    localStorage.setItem('otp', otp); // Store OTP for verification
+  
+    try {
+      const response = await fetch('https://shresta-1.onrender.com/send-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          to: phoneNumber,
+          body: `Your OTP code is: ${otp}`,
+        }),
+      });
+  
+      const data = await response.json();
+      if (data.success) {
+        toast.success("OTP sent successfully!");
+        navigate('/Pass1'); // Navigate only after successful OTP verification
+      } else {
+        toast.error("Phone Number is not verified.Contact Admin.");
       }
-      const phoneNumber = `+91${phonenumber}`;
-      const otp = generateOTP();
-      setLoadingOTP(true);
-      localStorage.setItem('otp', otp);
-      try {
-        const response = await fetch('https://shresta-1.onrender.com/send-otp', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            to: phoneNumber,
-            body: `Your OTP code is: ${otp}`,
-          }),
-        });
-        const data = await response.json();
-        if (data.success) {
-          toast.success("OTP sent successfully!");
-          navigate('/Pass1');
-        } else {
-          toast.error("Please verify your Number. Contact Admin.");
-        }
-      } catch (error) {
-        console.error("Error sending OTP:", error);
-        toast.error("Failed to send OTP. Please try again.");
-      } finally {
-        setLoadingOTP(false);
-      }
-    } else {
-      toast.error("Please fill in all fields and verify you're not a robot.");
+    } catch (error) {
+      console.error("Error sending OTP:", error);
+      toast.error("Failed to send OTP. Please try again.");
+    } finally {
+      setLoadingOTP(false);
     }
   };
+  
   const statesList = [
     'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Goa', 'Gujarat', 'Haryana',
     'Himachal Pradesh', 'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur',

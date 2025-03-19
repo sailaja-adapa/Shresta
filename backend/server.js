@@ -33,7 +33,6 @@ app.post('/send-otp', async (req, res) => {
   if (!to || !body) {
     return res.status(400).json({ success: false, error: 'Missing required fields: "to" and/or "body"' });
   }
-
   try {
     const message = await client.messages.create({
       body: body,
