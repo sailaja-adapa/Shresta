@@ -4,12 +4,11 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import GetCurrentAddress from './GetCurrentAddress';  
 import { FaHome } from "react-icons/fa";
-import { FaMapMarkerAlt } from "react-icons/fa";
+import { FaMapMarkerAlt } from "react-icons/fa"; 
 import { 
   Box, Typography, TextField, Select, MenuItem, Checkbox, Button, FormControlLabel, CircularProgress 
 } from '@mui/material';
 import { convertLength } from '@mui/material/styles/cssUtils';
-
 
 const WelcomeComponent = () => {
   const [wardNo, setWardNo] = useState('');
