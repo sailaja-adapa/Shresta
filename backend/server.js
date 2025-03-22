@@ -58,7 +58,7 @@ app.post('/send-sms', async (req, res) => {
     const message = await client.messages.create({
       body: body,
       from: twilioPhoneNumber,
-      to: to
+      to: to  
     });
     res.status(200).json({ success: true, messageSid: message.sid });
   } catch (error) {
