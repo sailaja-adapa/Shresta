@@ -65,7 +65,7 @@ const Pass1 = () => {
         <TextField
           label="Enter OTP"
           variant="outlined" // ✅ This removes the extra box inside input
-          fullWidth
+          fullWidth  
           value={otp}
           onChange={handleChange}
           InputProps={{
