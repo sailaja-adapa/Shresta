@@ -115,28 +115,23 @@ To get started with **Shresta-City Insight** 🚀, make sure you have **Node.js*
     - The user is required to register using their Google email ID (@gmail.com) for authentication and must provide the required details.📩
     - The user logs in using registered email Id and password.🔐
     - The user provides their location manually or allows it to be retrieved via an API. 📍
-     <br>  
+    
       ![Location](loc.jpg)
-      <br>  
+    
     - An OTP is sent to their registered mobile number for verification, which must be entered to proceed. 🔢
-      <br>  
+    
       ![OTP message](OTP_msg.png)
-      <br>  
     
     - Upon successful verification, the user is redirected to the Complaint Submission Portal where they can report civic issues by uploading relevant images or documents. 📸📁
     - Alternatively, users can utilize voice input to lodge a complaint, which is transcribed into text via a Speech-to-Text API. 🎙️🗣️
     - After submitting the complaint, the user is navigated to the Thank you Page, where they have the option to provide feedback on their experience. ✍️
-    
-  + **Officer Registration & Complaint Management Process 👮‍♂️📋**
-    
 
++ **Officer Registration & Complaint Management Process 👮‍♂️📋**
     - Officers are required to register using an official email ID with the "@svecw.edu.in" domain, as this domain is exclusively designated for authorized personnel. ✉️✅
     - Upon successful login, officers gain access to the Complaint Management Dashboard, where they can review all submitted complaints along with their corresponding images. 🖥️📸
     - When an officer marks a complaint as resolved and selects the delete option, an automated notification is sent to the complainant via Twilio, informing them of the resolution. 📩🔔
-      <br>  
-      ![Issue Resolved message](Resolved_message.png) 
-      <br>  
     
+      ![Issue Resolved message](Resolved_message.png)
 
 
 ## Our Goals 🎯
