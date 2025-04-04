@@ -132,8 +132,6 @@ To get started with **Shresta-City Insight** 🚀, make sure you have **Node.js*
     - When an officer marks a complaint as resolved and selects the delete option, an automated notification is sent to the complainant via Twilio, informing them of the resolution. 📩🔔
     
       ![Issue Resolved message](Resolved_message.png)
- 
-    
 
 
 ## Our Goals 🎯
