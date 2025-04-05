@@ -8,7 +8,24 @@ const app = express();
 const port = process.env.PORT || 5001; // Correct port handling for Render
 
 app.use(bodyParser.json());
-app.use(cors());
+
+const allowedOrigins = [
+  'http://localhost:5001',         // for your local testing
+  'https://shresta.vercel.app'     // your deployed frontend
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
+  methods: ['GET', 'POST'],
+  credentials: true
+}));
+
 
 // Twilio credentials from environment variables
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
