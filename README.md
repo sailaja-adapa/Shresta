@@ -124,6 +124,9 @@ To get started with **Shresta-City Insight** 🚀, make sure you have **Node.js*
     
     - Upon successful verification, the user is redirected to the Complaint Submission Portal where they can report civic issues by uploading relevant images or documents. 📸📁
     - Alternatively, users can utilize voice input to lodge a complaint, which is transcribed into text via a Speech-to-Text API. 🎙️🗣️
+
+      ![Speech to Text API](speech.jpg)
+
     - After submitting the complaint, the user is navigated to the Thank you Page, where they have the option to provide feedback on their experience. ✍️
 
 + **Officer Registration & Complaint Management Process 👮‍♂️📋**
