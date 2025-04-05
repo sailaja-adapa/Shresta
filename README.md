@@ -121,7 +121,6 @@ To get started with **Shresta-City Insight** 🚀, make sure you have **Node.js*
     - An OTP is sent to their registered mobile number for verification, which must be entered to proceed. 🔢
     
       ![OTP message](OTP_msg.png)
-    
     - Upon successful verification, the user is redirected to the Complaint Submission Portal where they can report civic issues by uploading relevant images or documents. 📸📁
     - Alternatively, users can utilize voice input to lodge a complaint, which is transcribed into text via a Speech-to-Text API. 🎙️🗣️
 
