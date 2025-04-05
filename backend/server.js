@@ -33,6 +33,7 @@ app.post('/send-otp', async (req, res) => {
   if (!to || !body) {
     return res.status(400).json({ success: false, error: 'Missing required fields: "to" and/or "body"' });
   }
+
   try {
     const message = await client.messages.create({
       body: body,
@@ -47,9 +48,10 @@ app.post('/send-otp', async (req, res) => {
   }
 });
 
-// Endpoint to send general SMS 
+// Endpoint to send general SMS
 app.post('/send-sms', async (req, res) => {
   const { to, body } = req.body;
+
   if (!to || !body) {
     return res.status(400).json({ success: false, error: 'Missing required fields: "to" and/or "body"' });
   }
@@ -58,8 +60,9 @@ app.post('/send-sms', async (req, res) => {
     const message = await client.messages.create({
       body: body,
       from: twilioPhoneNumber,
-      to: to  
+      to: to
     });
+
     res.status(200).json({ success: true, messageSid: message.sid });
   } catch (error) {
     console.error('Error sending SMS:', error);
@@ -71,3 +74,4 @@ app.post('/send-sms', async (req, res) => {
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
+

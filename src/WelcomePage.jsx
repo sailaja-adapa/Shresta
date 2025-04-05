@@ -56,10 +56,9 @@ const WelcomeComponent = () => {
     setIsAddressManuallyEdited(true);
   };
   const handleCheckboxChange = () => setIsNotARobot(!isNotARobot);
-
   const generateOTP = () => Math.floor(100000 + Math.random() * 900000);
+
   const handleNextClick = async () => {
-    // Check if all required fields are filled
     if (
       !wardNo ||
       !selectedLocation ||
@@ -73,20 +72,21 @@ const WelcomeComponent = () => {
       return;
     }
   
-    // Check if the phone number is verified
-    const storedOTP = localStorage.getItem('otp');
-    if (!storedOTP) {
-      toast.error("Phone number not verified. Please verify before proceeding.");
+    // Validate phone number format (Indian 10 digit number starting from 6-9)
+    const phoneRegex = /^[6-9]\d{9}$/;
+    if (!phoneRegex.test(phonenumber)) {
+      toast.error("Invalid phone number. Please enter a valid 10-digit Indian phone number.");
       return;
     }
   
     const phoneNumber = `+91${phonenumber}`;
-    const otp = Math.floor(100000 + Math.random() * 900000); // Generate OTP
+    const otp = generateOTP(); // Generate OTP
     setLoadingOTP(true);
-    localStorage.setItem('otp', otp); // Store OTP for verification
   
     try {
-      const response = await fetch('https://shresta-1.onrender.com/send-otp', {
+      //const response = await fetch('https://shresta-1.onrender.com/send-otp', {
+        const response = await fetch('http://localhost:5001/send-otp', {
+
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -98,17 +98,19 @@ const WelcomeComponent = () => {
       const data = await response.json();
       if (data.success) {
         toast.success("OTP sent successfully!");
-        navigate('/Pass1'); // Navigate only after successful OTP verification
+        localStorage.setItem('otp', otp); // Store OTP only after successful send
+        navigate('/Pass1'); // Navigate to next page
       } else {
-        toast.error("Phone Number is not verified.Contact Admin.");
+        toast.error("Failed to send OTP. Please try again.");
       }
     } catch (error) {
       console.error("Error sending OTP:", error);
-      toast.error("Failed to send OTP. Please try again.");
+      toast.error("Something went wrong. Please try again later.");
     } finally {
       setLoadingOTP(false);
     }
   };
+  
   
   const statesList = [
     'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Goa', 'Gujarat', 'Haryana',
