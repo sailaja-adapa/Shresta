@@ -116,7 +116,11 @@ To get started with **Shresta-City Insight** 🚀, make sure you have **Node.js*
     - The user logs in using registered email Id and password.🔐
     - The user provides their location manually or allows it to be retrieved via an API. 📍
     
+<<<<<<< HEAD
       ![Location](location.jpg)
+=======
+      ![Location](loc.jpg)
+>>>>>>> a09ee24c6a8912da69fd01723bb234c5722cc66f
     
     - An OTP is sent to their registered mobile number for verification, which must be entered to proceed. 🔢
     

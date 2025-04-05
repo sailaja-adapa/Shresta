@@ -5,7 +5,7 @@ const twilio = require('twilio');
 require('dotenv').config(); // Load environment variables from .env file
 
 const app = express();
-const port = 5001;
+const port = process.env.PORT || 5001; // Correct port handling for Render
 
 app.use(bodyParser.json());
 app.use(cors());
