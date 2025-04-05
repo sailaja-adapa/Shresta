@@ -9,7 +9,6 @@
   <img src="https://forthebadge.com/images/badges/powered-by-responsibility.svg"/>
 </div>
 <br>
-
 <div align="center">
   <table align="center">
     <thead align="center">
@@ -109,7 +108,6 @@ To get started with **Shresta-City Insight** ðŸš€, make sure you have **Nod
 - **Scalable Infrastructure** with Firebase services.
 
 ## Workflow
-
   + **Citizen Workflow ðŸ‘©â€ ðŸ¦°:**
     - The user is required to register using their Google email ID (@gmail.com) for authentication and must provide the required details.ðŸ“©
     - The user logs in using registered email Id and password.ðŸ”
@@ -118,7 +116,7 @@ To get started with **Shresta-City Insight** ðŸš€, make sure you have **Nod
       <br>  
       ![OTP message](OTP_msg.png)
       <br>  
-    
+   
     - Upon successful verification, the user is redirected to the Complaint Submission Portal where they can report civic issues by uploading relevant images or documents. ðŸ“¸ðŸ“
     - Alternatively, users can utilize voice input to lodge a complaint, which is transcribed into text via a Speech-to-Text API. ðŸŽ™ï¸ ðŸ—£ï¸
     - After submitting the complaint, the user is navigated to the Thank you Page, where they have the option to provide feedback on their experience. âœ ï¸
