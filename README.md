@@ -1,7 +1,6 @@
 <div align="center">
   <img width="400" alt="Shresta City Insight" align="center" src="image.png">
 </div>
-
 <hr>
 
 <div align="center">
@@ -15,10 +14,10 @@
   <table align="center">
     <thead align="center">
       <tr border: 1px;>
-        <td><strong>🌟 Stars</strong></td>
-        <td><strong>🍴 Forks</strong></td>
-        <td><strong>🐛 Issues</strong></td>
-        <td><strong>🔔 Pull Requests</strong></td>
+        <td><strong>ðŸŒŸ Stars</strong></td>
+        <td><strong>ðŸ ´ Forks</strong></td>
+        <td><strong>ðŸ › Issues</strong></td>
+        <td><strong>ðŸ”” Pull Requests</strong></td>
       </tr>
     </thead>
     <tbody>
@@ -34,7 +33,7 @@
 
 <hr>
 
-## Problem Statement 😖
+## Problem Statement ðŸ˜–
 
 Urban areas face critical challenges like waste management inefficiency, traffic issues, and unsafe public spaces. At the same time, citizens often struggle to report such problems effectively. This leads to delayed resolutions, further deteriorating the environment and public well-being.
 
@@ -42,23 +41,23 @@ Urban areas face critical challenges like waste management inefficiency, traffic
 
 ---
 
-## Proposed Solution 🤩
+## Proposed Solution ðŸ¤©
 
 **Shresta-City Insight** allows users to report issues, track resolutions, upload evidence (such as photos), and receive notifications about the progress of their complaints. It leverages **Firebase** for backend services, and **Twilio** for real-time SMS notifications, keeping users informed about their reports.
 
 ---
 
-## Glimpse ✨
+## Glimpse âœ¨
 Check out the live demo of the platform [Shresta City Insight](https://shresta.vercel.app/)
 
 ---
 
 ### How to Set Up
 
-To get started with **Shresta-City Insight** 🚀, make sure you have **Node.js** and **npm** installed on your machine 💻.
+To get started with **Shresta-City Insight** ðŸš€, make sure you have **Node.js** and **npm** installed on your machine ðŸ’».
 
 1) To check this, you can type **node -v** and **npm -v** in the terminal.
-2) **Fork** the repo 🍴 by clicking the fork button on GitHub and give it a name.
+2) **Fork** the repo ðŸ ´ by clicking the fork button on GitHub and give it a name.
 3) **Clone** it to your local machine using:
 
     ```sh
@@ -68,23 +67,23 @@ To get started with **Shresta-City Insight** 🚀, make sure you have **Node.js*
 4) **Navigate** to the project directory:
 
     ```sh
-    cd projectname  # Example: cd Shresta-city-insight
+    cd projectname # Example: cd Shresta-city-insight
     ```
 
-5) **Install** the dependencies 🔧:
+5) **Install** the dependencies ðŸ”§:
 
     ```sh
     npm install  
     ```
 
-6) Start the local server 🌍:
+6) Start the local server ðŸŒ :
 
     ```sh
     npm start
     ```
 
     This will launch the development server at:
-    👉 **http://localhost:3000/** 🖥️
+    ðŸ‘‰ **http://localhost:3000/** ðŸ–¥ï¸
 
 ## Tech Stack Used
 
@@ -111,34 +110,32 @@ To get started with **Shresta-City Insight** 🚀, make sure you have **Node.js*
 
 ## Workflow
 
-  + **Citizen Workflow 👩‍🦰:**
-    - The user is required to register using their Google email ID (@gmail.com) for authentication and must provide the required details.📩
-    - The user logs in using registered email Id and password.🔐
-    - The user provides their location manually or allows it to be retrieved via an API. 📍
-    
-<<<<<<< HEAD
-      ![Location](location.jpg)
-=======
-      ![Location](loc.jpg)
->>>>>>> a09ee24c6a8912da69fd01723bb234c5722cc66f
-    
-    - An OTP is sent to their registered mobile number for verification, which must be entered to proceed. 🔢
-    
+  + **Citizen Workflow ðŸ‘©â€ ðŸ¦°:**
+    - The user is required to register using their Google email ID (@gmail.com) for authentication and must provide the required details.ðŸ“©
+    - The user logs in using registered email Id and password.ðŸ”
+    - The user provides their location manually or allows it to be retrieved via an API. ðŸ“
+    - An OTP is sent to their registered mobile number for verification, which must be entered to proceed. ðŸ”¢
+      <br>  
       ![OTP message](OTP_msg.png)
+      <br>  
     
-    - Upon successful verification, the user is redirected to the Complaint Submission Portal where they can report civic issues by uploading relevant images or documents. 📸📁
-    - Alternatively, users can utilize voice input to lodge a complaint, which is transcribed into text via a Speech-to-Text API. 🎙️🗣️
-    - After submitting the complaint, the user is navigated to the Thank you Page, where they have the option to provide feedback on their experience. ✍️
-
-+ **Officer Registration & Complaint Management Process 👮‍♂️📋**
-    - Officers are required to register using an official email ID with the "@svecw.edu.in" domain, as this domain is exclusively designated for authorized personnel. ✉️✅
-    - Upon successful login, officers gain access to the Complaint Management Dashboard, where they can review all submitted complaints along with their corresponding images. 🖥️📸
-    - When an officer marks a complaint as resolved and selects the delete option, an automated notification is sent to the complainant via Twilio, informing them of the resolution. 📩🔔
+    - Upon successful verification, the user is redirected to the Complaint Submission Portal where they can report civic issues by uploading relevant images or documents. ðŸ“¸ðŸ“
+    - Alternatively, users can utilize voice input to lodge a complaint, which is transcribed into text via a Speech-to-Text API. ðŸŽ™ï¸ ðŸ—£ï¸
+    - After submitting the complaint, the user is navigated to the Thank you Page, where they have the option to provide feedback on their experience. âœ ï¸
     
-      ![Issue Resolved message](Resolved_message.png)
+  + **Officer Registration & Complaint Management Process ðŸ‘®â€ â™‚ï¸ ðŸ“‹**
+    
+
+    - Officers are required to register using an official email ID with the "@svecw.edu.in" domain, as this domain is exclusively designated for authorized personnel. âœ‰ï¸ âœ…
+    - Upon successful login, officers gain access to the Complaint Management Dashboard, where they can review all submitted complaints along with their corresponding images. ðŸ–¥ï¸ ðŸ“¸
+    - When an officer marks a complaint as resolved and selects the delete option, an automated notification is sent to the complainant via Twilio, informing them of the resolution. ðŸ“©ðŸ””
+      <br>  
+      ![Issue Resolved message](Resolved_message.png) 
+      <br>  
+    
 
 
-## Our Goals 🎯
+## Our Goals ðŸŽ¯
 
 The project aims to tackle social issues like waste management, civic improvements, and community-driven change.
 
@@ -152,4 +149,4 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 [MIT](https://choosealicense.com/licenses/mit/)
 
-<h3 align="center"> Show some ❤️ by starring this awesome repository! </h3>
+<h3 align="center"> Show some â ¤ï¸ by starring this awesome repository! </h3>
