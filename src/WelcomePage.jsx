@@ -85,7 +85,7 @@ const WelcomeComponent = () => {
   
     try {
       //const response = await fetch('https://shresta-1.onrender.com/send-otp', {
-        const response = await fetch('http://localhost:5001/send-otp', {
+        const response = await fetch('https://shresta-1-nuem.onrender.com/send-otp', {
 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
