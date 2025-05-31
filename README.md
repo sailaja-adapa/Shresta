@@ -104,7 +104,7 @@ To get started with **Shresta-City Insight** 🚀, make sure you have **Node.js*
 ## Features
 
 - **Civic Issue Reporting**: Report issues with real-time tracking.
-- **Secure User Authentication** and Authorization.
+- **Secure User Authentication** and Authorization via **Bcrypt**.
 - **OTP Authentication** using Firebase for secure user verification.
 - **Real-time Notifications** via SMS using Twilio.
 - **Scalable Infrastructure** with Firebase services.
