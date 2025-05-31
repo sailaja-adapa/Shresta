@@ -10,6 +10,7 @@ import { RiLockPasswordFill } from "react-icons/ri";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { Box, Button, Typography, TextField, InputAdornment, IconButton } from '@mui/material';
 import { motion } from 'framer-motion';
+import bcrypt from 'bcryptjs';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -31,12 +32,24 @@ const Login = () => {
       return;
     }
 
-    const dbRef = collection(db2, 'Auth');
     try {
-      const userQuery = query(dbRef, where('Email', '==', email), where('Password', '==', password));
+      const dbRef = collection(db2, 'Auth');
+      const userQuery = query(dbRef, where('Email', '==', email));
       const userSnapshot = await getDocs(userQuery);
 
-      if (!userSnapshot.empty) {
+      if (userSnapshot.empty) {
+        toast.error('User not found ❌', { position: 'top-center' });
+        setIsLoading(false);
+        return;
+      }
+
+      const userDoc = userSnapshot.docs[0];
+      const userData = userDoc.data();
+      const hashedPassword = userData.Password;
+
+      const isPasswordValid = await bcrypt.compare(password, hashedPassword);
+
+      if (isPasswordValid) {
         toast.success('Login successful! Redirecting...', { position: 'top-center' });
 
         setTimeout(() => {
@@ -49,11 +62,13 @@ const Login = () => {
           }
         }, 2000);
       } else {
-        toast.error('Check your Credentials ❌', { position: 'top-center' });
+        toast.error('Incorrect password ❌', { position: 'top-center' });
       }
     } catch (error) {
+      console.error('Login error:', error);
       toast.error('An error occurred. Please try again ⚠️', { position: 'top-center' });
     }
+
     setIsLoading(false);
   };
 
@@ -88,20 +103,12 @@ const Login = () => {
             borderRadius: '10px',
             overflow: 'hidden',
             boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
-            transition: 'transform 0.3s ease',
-            '&:hover': { transform: 'scale(1.02)' },
             backgroundColor: 'white',
             margin: 'auto',
+            '&:hover': { transform: 'scale(1.02)' },
           }}
         >
-          <Box
-            sx={{
-              flex: 1.2,
-              overflow: 'hidden',
-              height: '100%',
-              borderRight: '2px solid #ced6e0',
-            }}
-          >
+          <Box sx={{ flex: 1.2, overflow: 'hidden', height: '100%', borderRight: '2px solid #ced6e0' }}>
             <img
               src="https://media.istockphoto.com/id/1305268276/vector/registration-abstract-concept-vector-illustration.jpg?s=612x612&w=0&k=20&c=nfvUbHjcNDVIPdWkaxGx0z0WZaAEuBK9SyG-aIqg2-0="
               alt="Registration Illustration"
@@ -122,16 +129,7 @@ const Login = () => {
             />
           </Box>
 
-          <Box
-            sx={{
-              flex: 1,
-              p: '2rem',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              gap: 4,
-            }}
-          >
+          <Box sx={{ flex: 1, p: '2rem', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 4 }}>
             <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <Typography
                 variant="h4"
@@ -140,7 +138,6 @@ const Login = () => {
                   color: '#007bff',
                   fontWeight: 'bold',
                   textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)',
-                  transition: 'color 0.3s ease, transform 0.2s',
                   '&:hover': {
                     color: '#0056b3',
                     transform: 'scale(1.1)',
@@ -202,11 +199,16 @@ const Login = () => {
                   color: 'white',
                   fontSize: '1.1rem',
                   borderRadius: '5px',
-                  transition: 'all 0.3s ease-in-out',
                 }}
                 disabled={isLoading}
               >
-                Login {isLoading && <AiOutlineLoading3Quarters />}
+                {isLoading ? (
+                  <>
+                    Logging in... &nbsp; <AiOutlineLoading3Quarters className="spin" />
+                  </>
+                ) : (
+                  'Login'
+                )}
               </Button>
 
               <Typography textAlign="center" mt={2}>
