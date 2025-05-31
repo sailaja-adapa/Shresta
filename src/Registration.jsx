@@ -1,18 +1,20 @@
+
 import React, { useState } from 'react';
 import { db2 } from './firebaseRegistrationConfig';
-import { addDoc, collection, where, query, getDocs } from 'firebase/firestore';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { addDoc, collection } from 'firebase/firestore';
+import bcrypt from 'bcryptjs';
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 import { MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
-import { FaEye, FaEyeSlash, FaUser  } from 'react-icons/fa';
+import { FaEye, FaEyeSlash, FaUser } from 'react-icons/fa';
 import { FaPhone, FaMapLocation } from "react-icons/fa6";
 import { TbGenderBigender } from "react-icons/tb";
-import { Box, Paper, TextField, Button, Typography, FormControl, IconButton, InputAdornment, Container } from "@mui/material";
-import { Select, MenuItem, InputLabel, Grid } from "@mui/material";
+import { Box, Paper, TextField, Button, Typography, IconButton, InputAdornment, Container, Select, MenuItem } from "@mui/material";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import image from '../src/register.jpg';
 
+// Registration Wrapper
 const Registration = () => {
   return (
     <Box
@@ -44,7 +46,6 @@ const Registration = () => {
             marginTop: "4rem",
           }}
         >
-          {/* Image Side */}
           <Box
             sx={{
               width: { xs: "100%", md: "50%" },
@@ -63,7 +64,6 @@ const Registration = () => {
             />
           </Box>
 
-          {/* Form Side */}
           <Box
             sx={{
               flex: 1,
@@ -82,6 +82,11 @@ const Registration = () => {
   );
 };
 
+export default Registration;
+
+// -------------------------------------------
+// Page 1: GeneralDetailsPage
+// -------------------------------------------
 export const GeneralDetailsPage = () => {
   const navigate = useNavigate();
   const [firstName, setFirstName] = useState('');
@@ -95,110 +100,89 @@ export const GeneralDetailsPage = () => {
   const handleContinue = (e) => {
     e.preventDefault();
 
-    // Simple email validation
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailRegex.test(email)) {
-      toast.error('Please enter a valid email address!', {
-        position: 'top-center'
-      });
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      toast.error("Invalid email format");
       return;
-    }
-    if (password !== confirmPassword) {
-      toast.error('Passwords do not match!', {
-        position: 'top-center'
-      });
-      return;
-    }
-    const details = {
-      FirstName: firstName, LastName: lastName, FullName: `${firstName} ${lastName}`, Username: username, Email: email, Password: password, ConfirmPassword: confirmPassword
     }
 
-    navigate(`/register/additional-details?data=${encodeURI(JSON.stringify(details))}`);
-  }
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+
+    const details = {
+      FirstName: firstName,
+      LastName: lastName,
+      FullName: `${firstName} ${lastName}`,
+      Username: username,
+      Email: email,
+      Password: password,
+    };
+
+    navigate(`/register/additional-details?data=${encodeURIComponent(JSON.stringify(details))}`);
+  };
+
   return (
     <Box
       sx={{
         background: "rgba(255, 255, 255, 0.95)",
         padding: "0.8rem",
-        maxWidth: "100%",
         borderRadius: "12px",
-        backdropFilter: "blur(8px)",
-        transition: "transform 0.3s ease, box-shadow 0.3s ease",
         animation: "fadeAnim 0.5s 1",
-        "@keyframes fadeAnim": {
-          "0%": { opacity: 0 },
-          "100%": { opacity: 1 },
-        },
       }}
     >
-      <Paper
-        elevation={3}
-        sx={{
-          width: "100%",
-          padding: "1rem",
-        }}
-      >
-        <Typography variant="h4" sx={{ fontFamily: "'Open Sans', sans-serif", fontWeight: 600, color: "#333", textAlign: "center", marginBottom: "1.5rem" }}>
+      <Paper elevation={3} sx={{ width: "100%", padding: "1rem" }}>
+        <Typography variant="h4" sx={{ textAlign: "center", marginBottom: "1.5rem" }}>
           Register
         </Typography>
 
-        {/* Name Fields */}
-        <Box sx={{ display: "flex", gap: "0.5em", alignItems: "center" }}>
-          <TextField fullWidth variant="outlined" label="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
-          <TextField fullWidth variant="outlined" label="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
+        <Box sx={{ display: "flex", gap: "0.5em" }}>
+          <TextField fullWidth label="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
+          <TextField fullWidth label="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
         </Box>
 
-        {/* Username */}
-        <TextField 
-          fullWidth 
-          variant="outlined" 
-          label="Username" 
-          value={username} 
-          onChange={(e) => setUsername(e.target.value)} 
-          required 
+        <TextField
+          fullWidth
+          label="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           sx={{ marginTop: "1rem" }}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <FaUser style={{ color: "#007bff", fontSize: "1.3rem" }} />
+                <FaUser />
               </InputAdornment>
-            ),
+            )
           }}
         />
 
-        {/* Email with Icon */}
         <TextField
           fullWidth
+          label="Email"
           type="email"
-          variant="outlined"
-          label="Enter your email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          required
           sx={{ marginTop: "1rem" }}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <MdEmail style={{ color: "#007bff", fontSize: "1.5rem" }} />
+                <MdEmail />
               </InputAdornment>
-            ),
+            )
           }}
         />
 
-        {/* Password with Lock Icon */}
         <TextField
           fullWidth
+          label="Password"
           type={showPassword ? "text" : "password"}
-          variant="outlined"
-          label="Enter your password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          required
           sx={{ marginTop: "1rem" }}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <RiLockPasswordFill style={{ color: "#007bff", fontSize: "1.5rem" }} />
+                <RiLockPasswordFill />
               </InputAdornment>
             ),
             endAdornment: (
@@ -207,60 +191,42 @@ export const GeneralDetailsPage = () => {
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </IconButton>
               </InputAdornment>
-            ),
+            )
           }}
         />
 
-        {/* Confirm Password with Lock Icon */}
         <TextField
           fullWidth
-          type="password"
-          variant="outlined"
           label="Confirm Password"
+          type="password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          required
           sx={{ marginTop: "1rem" }}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <RiLockPasswordFill style={{ color: "#007bff", fontSize: "1.5rem" }} />
+                <RiLockPasswordFill />
               </InputAdornment>
-            ),
+            )
           }}
         />
 
-        {/* Submit Button */}
         <Button
-          type="submit"
           variant="contained"
-          color="primary"
           fullWidth
-          sx={{
-            padding: "0.75rem",
-            fontSize: "1.1rem",
-            borderRadius: "8px",
-            marginTop: "1.5rem",
-            transition: "filter 0.3s ease",
-            "&:hover": { filter: "brightness(0.9)" },
-          }}
+          sx={{ marginTop: "1.5rem" }}
           onClick={handleContinue}
         >
           Continue
         </Button>
-
-        {/* Login Redirect */}
-        <Typography sx={{ textAlign: "center", fontSize: "0.95rem", color: "#555", marginTop: "1rem" }}>
-          Already have an account?{" "}
-          <Typography component="span" sx={{ color: "#007bff", fontWeight: 600, cursor: "pointer", "&:hover": { color: "#0056b3", textDecoration: "underline" } }}>
-            Login
-          </Typography>
-        </Typography>
       </Paper>
     </Box>
   );
 };
 
+// -------------------------------------------
+// Page 2: AdditionalDetailsPage
+// -------------------------------------------
 export const AdditionalDetailsPage = () => {
   const navigate = useNavigate();
   const [gender, setGender] = useState('');
@@ -269,172 +235,74 @@ export const AdditionalDetailsPage = () => {
   const [adhar, setAdhar] = useState('');
   const [country, setCountry] = useState('');
 
-  // get previously filled data
   const [queries] = useSearchParams();
-  const data = JSON.parse(decodeURI(queries.get("data")));
+  const data = JSON.parse(decodeURIComponent(queries.get("data")));
 
-  const statesList = [
-    'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Goa', 'Gujarat', 'Haryana',
-    'Himachal Pradesh', 'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur',
-    'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana',
-    'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal', 'Jammu and Kashmir'
-  ];
+  const handleSubmit = async () => {
+    if (!phoneNumber || !adhar || !gender || !state || !country) {
+      toast.error("Please fill all fields");
+      return;
+    }
 
-  const dbref = collection(db2, "Auth");
-  const signup = async () => {
-    if (!data) return;
-    const matchEmail = query(dbref, where('Email', '==', data?.Email));
+    const saltRounds = 10;
+    const hashedPassword = bcrypt.hashSync(data.Password, saltRounds);
+
+    const userObj = {
+      FirstName: data.FirstName,
+      LastName: data.LastName,
+      FullName: data.FullName,
+      Username: data.Username,
+      Email: data.Email,
+      Password: hashedPassword,
+      PhoneNumber: phoneNumber,
+      Adhar: adhar,
+      Gender: gender,
+      State: state,
+      Country: country,
+      Timestamp: new Date()
+    };
+
     try {
-      const snapshot = await getDocs(matchEmail);
-      const emailMatchingArray = snapshot.docs.map((doc) => doc.data());
-      if (emailMatchingArray.length > 0) {
-        toast.error("This Email Already Exists", {
-          position: 'top-center'
-        });
-      } else {
-        await addDoc(dbref, {
-          ...data,
-          Gender: gender,
-          State: state,
-          PhoneNumber: phoneNumber,
-          AdharNumber: adhar,
-          Country: country,
-        });
-        toast.success('Registration Successful! 😊', {
-          position: 'top-center'
-        });
-        setTimeout(() => {
-          navigate('/login');
-        }, 3000);
-      }
+      const dbRef = collection(db2, "Auth");
+      await addDoc(dbRef, userObj);
+      toast.success("Registered Successfully!");
+      navigate("/login");
     } catch (error) {
-      toast.error('Registration Failed', {
-        position: 'top-center'
-      });
+      toast.error("Registration failed. Try again.");
+      console.error("Error adding user:", error);
     }
   };
 
-  const handleLogin = () => {
-    signup();
-    navigate('/login');
-  };
-
   return (
-    <Box
-      sx={{
-        background: "rgba(255, 255, 255, 0.95)",
-        padding: "1.5rem",
-        maxWidth: "100%",
-        borderRadius: "12px",
-        backdropFilter: "blur(8px)",
-        transition: "transform 0.3s ease, box-shadow 0.3s ease",
-        animation: "fadeAnim 0.5s 1",
-        "@keyframes fadeAnim": {
-          "0%": { opacity: 0 },
-          "100%": { opacity: 1 },
-        },
-      }}
-    >
-      <Paper elevation={3} sx={{ width: "100%", padding: "1.5rem" }}>
-        <Typography variant="h4" sx={{ fontFamily: "'Open Sans', sans-serif", fontWeight: 600, color: "#333", textAlign: "center", marginBottom: "1.5rem" }}>
-          Fill Your Details
-        </Typography>
+    <Box sx={{ padding: "1rem", background: "white", borderRadius: "10px" }}>
+      <Typography variant="h5" sx={{ marginBottom: "1rem" }}>Additional Details</Typography>
 
-        {/* Phone Number */}
-        <TextField
-          fullWidth
-          label="Enter your Phone number"
-          variant="outlined"
-          value={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
-          required
-          sx={{ marginBottom: "1rem" }}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <FaPhone style={{ color: "#007bff", fontSize: "1.3rem" }} />
-              </InputAdornment>
-            ),
-          }}
-        />
+      <TextField label="Phone Number" fullWidth value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} sx={{ mb: 2 }} />
+      <TextField label="Adhar Number" fullWidth value={adhar} onChange={(e) => setAdhar(e.target.value)} sx={{ mb: 2 }} />
 
-        {/* Adhar Number */}
-        <TextField
-          fullWidth
-          label="Aadhar Number"
-          variant="outlined"
-          value={adhar}
-          onChange={(e) => setAdhar(e.target.value)}
-          required
-          sx={{ marginBottom: "1rem" }}
-        />
+      <Select fullWidth value={gender} onChange={(e) => setGender(e.target.value)} displayEmpty sx={{ mb: 2 }}>
+        <MenuItem value="" disabled>Select Gender</MenuItem>
+        <MenuItem value="Male">Male</MenuItem>
+        <MenuItem value="Female">Female</MenuItem>
+        <MenuItem value="Other">Other</MenuItem>
+      </Select>
 
-        {/* Gender Select */}
-        <FormControl fullWidth variant="outlined" sx={{ marginBottom: "1rem" }}>
-          <InputLabel>Select Gender</InputLabel>
-          <Select value={gender} onChange={(e) => setGender(e.target.value)} required label="Select Gender">
-            <MenuItem value="">Select Gender</MenuItem>
-            <MenuItem value="Male">Male</MenuItem>
-            <MenuItem value="Female">Female</MenuItem>
-          </Select>
-        </FormControl>
+      <Select fullWidth value={state} onChange={(e) => setState(e.target.value)} displayEmpty sx={{ mb: 2 }}>
+        <MenuItem value="" disabled>Select State</MenuItem>
+        {[
+          'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Goa',
+          'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jharkhand', 'Karnataka', 'Kerala',
+          'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland',
+          'Odisha', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura',
+          'Uttar Pradesh', 'Uttarakhand', 'West Bengal', 'Jammu and Kashmir'
+        ].map((st, idx) => (
+          <MenuItem key={idx} value={st}>{st}</MenuItem>
+        ))}
+      </Select>
 
-        {/* State & Country Fields */}
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={6}>
-            <FormControl fullWidth variant="outlined">
-              <InputLabel>Select State</InputLabel>
-              <Select value={state} onChange={(e) => setState(e.target.value)} required label="Select State">
-                {statesList.map((stateOption, index) => (
-                  <MenuItem key={index} value={stateOption}>
-                    {stateOption}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField 
-              fullWidth label="Country" 
-              variant="outlined" 
-              value={country} 
-              onChange={(e) => setCountry(e.target.value)} 
-              required 
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <FaMapLocation style={{ color: "#007bff", fontSize: "1.3rem" }} />
-                  </InputAdornment>
-                ),
-              }}/>
-          </Grid>
-        </Grid>
+      <TextField label="Country" fullWidth value={country} onChange={(e) => setCountry(e.target.value)} sx={{ mb: 2 }} />
 
-        {/* Buttons */}
-        <Grid container spacing={2} sx={{ marginTop: "1.5rem" }}>
-          <Grid item xs={12} md={6}>
-            <Button
-              variant="contained"
-              fullWidth
-              sx={{
-                backgroundColor: "#ccc",
-                color: "black",
-                "&:hover": { backgroundColor: "#aaa" },
-              }}
-              onClick={() => navigate(-1)}
-            >
-              Back
-            </Button>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Button variant="contained" color="primary" fullWidth onClick={handleLogin}>
-              Register
-            </Button>
-          </Grid>
-        </Grid>
-      </Paper>
+      <Button variant="contained" fullWidth onClick={handleSubmit}>Register</Button>
     </Box>
   );
 };
-
-export default Registration;
